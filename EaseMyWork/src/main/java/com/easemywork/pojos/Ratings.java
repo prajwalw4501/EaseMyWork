@@ -1,10 +1,15 @@
 package com.easemywork.pojos;
 
+import java.time.LocalDate;
+
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,12 +26,17 @@ import lombok.ToString;
 @Table
 public class Ratings {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long rev_id;
 	@Column
-	private long rate_id;
-	@Column
-	private int score;
+	private Integer score;
 	@Column
 	private String comments;
+	@UpdateTimestamp
+	private LocalDate rev_date;
+	@ManyToOne
+	private Users user;
+	@ManyToOne
+	private Employees emp;
 
 }

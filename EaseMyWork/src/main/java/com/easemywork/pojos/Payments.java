@@ -2,11 +2,14 @@ package com.easemywork.pojos;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,13 +26,15 @@ import lombok.ToString;
 @Table
 public class Payments {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long pay_id;
-	@Column(nullable = false)
-	private double advance_amnt;
-	@Column(nullable = false)
-	private double final_amnt;
-	@Column(nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long pay_id;
+	@Column
+	private Double advance_amnt;
+	@Column
+	private Double final_amnt;
+	@UpdateTimestamp
 	private LocalDate pay_date;
+	@OneToOne
+	private Bookings bookings;
 
 }

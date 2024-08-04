@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -23,11 +24,11 @@ public class BaseEntity {
 	private String first_name;
 	@Column(nullable = false)
 	private String last_name;
-	@Column(nullable = false)
-	private Long phone_no;
 	@CreationTimestamp
+	@Column
 	private LocalDate created_date;
 	@UpdateTimestamp
+	@Column
 	private LocalDate updated_date;
 
 }
