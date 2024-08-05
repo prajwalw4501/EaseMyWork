@@ -1,6 +1,6 @@
 package com.easemywork.pojos;
 
 public enum Role {
-	ADMIN, USER, OWNER;
+	ROLE_ADMIN, ROLE_USER, ROLE_OWNER
 
 }
