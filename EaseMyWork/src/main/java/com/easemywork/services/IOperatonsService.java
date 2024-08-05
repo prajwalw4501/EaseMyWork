@@ -1,5 +1,5 @@
 package com.easemywork.services;
 
-public interface IServicesService {
+public interface IOperatonsService {
 
 }

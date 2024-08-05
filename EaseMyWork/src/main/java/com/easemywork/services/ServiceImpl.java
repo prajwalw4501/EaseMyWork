@@ -3,9 +3,8 @@ package com.easemywork.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class ServiceImpl implements IServicesService {
+public class ServiceImpl implements IOperatonsService {
 	@Autowired
-	IServicesService services;
+	IOperatonsService services;
 
 }
