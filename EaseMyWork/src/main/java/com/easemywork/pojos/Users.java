@@ -35,11 +35,14 @@ public class Users extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column
 	private Role role;
-	@ManyToOne
-	private Location location;
-	@OneToMany(mappedBy = "user")
-	private List<Bookings> bookings;
-	@OneToMany(mappedBy = "user")
-	private List<Ratings> ratings;
+	/*
+	 * @ManyToOne private Location location;
+	 */
+	/*
+	 * @OneToMany(mappedBy = "user") private List<Bookings> bookings;
+	 */
+	/*
+	 * @OneToMany(mappedBy = "user") private List<Ratings> ratings;
+	 */
 
 }

@@ -34,7 +34,8 @@ public class Payments {
 	private Double final_amnt;
 	@UpdateTimestamp
 	private LocalDate pay_date;
-	@OneToOne
-	private Bookings bookings;
+	/*
+	 * @OneToOne private Bookings bookings;
+	 */
 
 }

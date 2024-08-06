@@ -1,5 +1,7 @@
 package com.easemywork.services;
 
-public interface IRatingService {
+import com.easemywork.pojos.Ratings;
 
+public interface IRatingService {
+	Ratings getCmntforEmp(Long Id);
 }

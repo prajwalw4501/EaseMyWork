@@ -1,6 +1,7 @@
 package com.easemywork.pojos;
 
-import java.util.List;
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,8 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,8 +32,7 @@ public class Employees extends BaseEntity {
 	private Long aadhar_no;
 	@Column(nullable = false, unique = true)
 	private Long phone_no;
-	@ManyToOne
-	private Location location;
+
 	@Enumerated(EnumType.STRING)
 	@Column
 	private Gender gender;
@@ -42,11 +40,32 @@ public class Employees extends BaseEntity {
 	private Integer experience;
 	@Lob
 	private byte[] image;
-	@ManyToOne
-	private Services services;
-	@OneToMany(mappedBy = "emp")
-	private List<Bookings> bookings;
-	@OneToMany(mappedBy = "emp")
-	private List<Ratings> ratings;
+
+	/*
+	 * @OneToOne(mappedBy = "employees") private List<Loca>
+	 */
+	/*
+	 * @ManyToOne private Services services;
+	 */
+	/*
+	 * @OneToMany(mappedBy = "emp", fetch = FetchType.EAGER) private List<Bookings>
+	 * bookings;
+	 */
+	/*
+	 * @OneToMany(mappedBy = "emp",fetch = FetchType.EAGER) private List<Ratings>
+	 * ratings;
+	 */
+//	@JoinTable(
+//		      name = "user_role", 
+//		      joinColumns = @JoinColumn(name = "user_id"), 
+//		      inverseJoinColumns = @JoinColumn(name = "role_id"))
+	public Employees(String first_name, String last_name, Long aadhar_no, Long phone_no, Gender gender,
+			Integer experience) {
+		super();
+		this.aadhar_no = aadhar_no;
+		this.phone_no = phone_no;
+		this.gender = gender;
+		this.experience = experience;
+	}
 
 }

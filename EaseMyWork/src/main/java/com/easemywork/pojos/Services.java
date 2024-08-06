@@ -1,7 +1,5 @@
 package com.easemywork.pojos;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,9 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +31,7 @@ public class Services {
 	private Type type;
 	@Column(nullable = false)
 	private Double amount;
-	@OneToMany(mappedBy = "services")
-	private List<Employees> employees;
+	@OneToOne
+	private Employees employees;
 
 }
