@@ -13,9 +13,9 @@ import com.easemywork.pojos.Employees;
 
 @Repository
 public interface IEmployees extends JpaRepository<Employees, Long> {
-	@Query(nativeQuery = true, value = "select e.emp_id,e.first_name,e.last_name,e.aadhar_no,"
+	@Query(nativeQuery = true, value = "select e.emp_id,e.first_name,e.last_name,"
 			+ "e.experience,e.gender,e.phone_no,l.city,l.state,s.type from employees e "
-			+ "join location l on(e.emp_id=l.employees_emp_id) join services s on(e.emp_id=s.employees_emp_id)")
+			+ "join location l on(e.loc_id=l.loc_id) join services s on(e.service_id=s.service_id)")
 	List<Object[]> getAllEmps();
 
 	@Query(nativeQuery = true,value = "select e.emp_id,e.first_name,e.last_name,e.experience,e.gender,e.phone_no,l.city,l.state,s.type "

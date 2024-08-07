@@ -18,4 +18,11 @@ public interface IUsers extends JpaRepository<Users, Long> {
 			+ "u.email,l.city,l.state from users u inner join location l on(u.user_id=l.users_user_id) where u.user_id=?1")
 	List<Object[]> getDetailsByid(Long id);
 
+	Users findByEmail(String email);
+
+	Users findByPassword(String password);
+
+//	@Query(nativeQuery = true, value = "select * from users u where u.email=?1")
+	//Users findByEmail(String email);
+
 }

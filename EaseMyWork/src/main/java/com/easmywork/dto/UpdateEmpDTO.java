@@ -5,15 +5,12 @@ import com.easemywork.pojos.Gender;
 import lombok.Data;
 
 @Data
-public class EmployeesDTO {
+public class UpdateEmpDTO {
+
 	private String first_name;
 	private String last_name;
 	private Long aadhar_no;
 	private Integer experience;
 	private Gender gender;
 	private Long phone_no;
-	private String city;
-	private String state;
-
-
 }

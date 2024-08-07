@@ -34,9 +34,9 @@ public class Location {
 	private Double longitude;
 	@Column
 	private Double latitude;
-	@OneToOne
+	@OneToOne(mappedBy = "location")
 	private Employees employees;
-	@OneToOne
+	@OneToOne(mappedBy = "location")
 	private Users users;
 
 }

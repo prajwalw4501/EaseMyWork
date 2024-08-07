@@ -19,9 +19,12 @@ import com.easemywork.pojos.Employees;
 import com.easemywork.pojos.Ratings;
 import com.easemywork.pojos.Users;
 import com.easemywork.services.IEmployeeService;
+import com.easemywork.services.IOperatonsService;
 import com.easemywork.services.IRatingService;
 import com.easemywork.services.IUserService;
 import com.easmywork.dto.EmployeesDTO;
+import com.easmywork.dto.InsertEmployeeDTO;
+import com.easmywork.dto.UpdateEmpDTO;
 
 @RestController
 @RequestMapping("/api/owner")
@@ -38,15 +41,17 @@ public class OwnerController {
 	private IUserService usercontroller;
 	@Autowired
 	private IRatingService ratecontroller;
+	@Autowired
+	private IOperatonsService sercontroller;
 
-//Add Employee
-	@PostMapping("/add")
-	public ResponseEntity<Employees> addEmployee(Employees emp) {
-		Employees dto = empcontroller.addEmployee(emp);
-		return new ResponseEntity<>(dto, HttpStatus.CREATED);
+//Add Employee with address(done)
+	@PostMapping("/registeremp")
+	public ResponseEntity<Employees> addEmployee(@RequestBody InsertEmployeeDTO emps) {
+		Employees dto = empcontroller.addEmployee(emps);
+		return new ResponseEntity<Employees>(dto, HttpStatus.CREATED);
 	}
 
-//Employees Details!!
+//Employees Details!!(done)
 	@GetMapping("/allemps")
 	public ResponseEntity<List<Object[]>> allEmployees() {
 		List<Object[]> employees = empcontroller.allEmps();
@@ -55,23 +60,23 @@ public class OwnerController {
 
 	}
 
-//Delete Employee
-	@DeleteMapping("{id}")
+//Delete Employee (done)
+	@DeleteMapping("/deleteemp/{id}")
 	public ResponseEntity<Employees> deleteEmployee(@RequestParam Long id) {
 		empcontroller.deleteEmp(id);
 		return new ResponseEntity<Employees>(HttpStatus.OK);
 	}
 
-//Update Employee Details
-	@PutMapping("/edit/{id}")
+//Update Employee Details (done)
+	@PutMapping("/editemp/{id}")
 
-	public ResponseEntity<Employees> editEmp(@RequestParam Long id, @RequestBody EmployeesDTO empDto) {
-		empcontroller.updateEmployee(id, empDto);
-		return new ResponseEntity<Employees>(HttpStatus.OK);
+	public ResponseEntity<Employees> editEmp(@RequestParam Long id, @RequestBody UpdateEmpDTO empdto) {
+		Employees e = empcontroller.updateEmployee(id, empdto);
+		return new ResponseEntity<Employees>(e, HttpStatus.OK);
 	}
 
 // List acc to gender
-	@GetMapping("/listbygender/{gender}")
+	@GetMapping("/bygender/{gender}")
 	public ResponseEntity<List<Object[]>> getByGender(@RequestParam String gender) {
 		List<Object[]> sortedEmps = empcontroller.sortByGender(gender);
 		return new ResponseEntity<List<Object[]>>(sortedEmps, HttpStatus.OK);
@@ -105,18 +110,20 @@ public class OwnerController {
 		return new ResponseEntity<List<Users>>(sortedUsers, HttpStatus.OK);
 	}
 
-//get users details
-	@GetMapping("/userbyid/{user_id}")
-	public ResponseEntity<List<Object[]>> getUserById(Long id) {
-		List<Object[]> sortedUser = usercontroller.getUserById(id);
-		return new ResponseEntity<List<Object[]>>(sortedUser, HttpStatus.OK);
-	}
 
 // get cmnts of emp
 	@GetMapping("/cmntforemp/{id}")
-	public ResponseEntity<Ratings> getCmntOfEmp(Long id) {
+	public ResponseEntity<Ratings> getCmntOfEmp(@RequestParam Long id) {
 		Ratings rate = ratecontroller.getCmntforEmp(id);
 		return new ResponseEntity<Ratings>(rate, HttpStatus.OK);
 	}
+
+// get emp by id
+	@GetMapping("/empbyid/{id}")
+	public ResponseEntity<EmployeesDTO> getEmpById(Long id) {
+		EmployeesDTO dto = empcontroller.findById(id);
+		return new ResponseEntity<EmployeesDTO>(dto, HttpStatus.OK);
+	}
+
 
 }
