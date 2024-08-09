@@ -37,7 +37,7 @@ public class Users extends BaseEntity {
 	@Column
 	private Role role;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "loc_id")
 	private Location location;
 

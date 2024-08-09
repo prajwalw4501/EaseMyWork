@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.easemywork.exceptions.ResourceNotFoundException;
 import com.easemywork.pojos.Location;
-import com.easemywork.pojos.Role;
 import com.easemywork.pojos.Users;
 import com.easemywork.repositories.ILocation;
 import com.easemywork.repositories.IUsers;
@@ -65,14 +64,12 @@ public class UserImpl implements IUserService {
 	@Override
 	public Users login(Credentials cred) {
 		Users u = mapper.map(cred, Users.class);
-		Users client_mail = userservice.findByEmail(u.getEmail());
-		Users client_pass = userservice.findByPassword(u.getPassword());
-		if (client_mail == null && client_pass == null) {
-			if (u.getRole().equals(Role.ROLE_USER)) {
-				return u;
-			}
+	Users user=	userservice.findByEmailAndPassword(cred.getEmail(), cred.getPassword());
+		if(user.getEmail().equals(cred.getEmail()) && user.getPassword().equals(cred.getPassword())) {
+			return u;
 		}
 		return null;
+
 	}
 
 	@Override

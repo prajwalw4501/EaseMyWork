@@ -23,7 +23,7 @@ public interface IEmployees extends JpaRepository<Employees, Long> {
 	List<Object[]> sortByGender(String gender);
 	
 	@Query
-	(nativeQuery = true,value = "select e.emp_id,e.first_name,e.last_name,e.experience,e.gender,e.phone_no,l.city,s.type from employees e inner join location l on(e.loc_id=l.loc_id)inner join services s on(e.service_id=s.service_id) where l.city=?1")
+	(nativeQuery = true,value = "select e.emp_id,e.first_name,e.last_name,e.experience,e.gender,l.city,s.type,s.amount from employees e inner join location l on(e.loc_id=l.loc_id)inner join services s on(e.service_id=s.service_id) where l.city=?1")
 	List<Object[]> getEmpByCity(String city);
 	
 	@Query

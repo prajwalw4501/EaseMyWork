@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +24,7 @@ import com.easmywork.dto.UsersDTO;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin("*")
 public class UserController {
 	public UserController() {
 		System.out.println("in User UserController!");
@@ -50,7 +52,7 @@ public class UserController {
 	}
 
 //emp details acc to city (done)
-	@GetMapping("/empbycity/{city}")
+	@GetMapping("/empbycity/")
 	public ResponseEntity<List<Object[]>> allEmpByCity(@RequestParam String city) {
 		List<Object[]> empByCities = empcontroller.getByCity(city);
 		return new ResponseEntity<List<Object[]>>(empByCities, HttpStatus.OK);
