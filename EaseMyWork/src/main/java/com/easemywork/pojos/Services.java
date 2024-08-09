@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,8 +35,8 @@ public class Services {
 	private Type type;
 	@Column
 	private Double amount;
-	@OneToOne(mappedBy = "services")
-	@JoinColumn
-	private Employees employees;
+//	@OneToMany
+//	@JoinColumn(name = "emp_id")
+//	private Employees employees;
 
 }

@@ -8,10 +8,13 @@ import org.apache.catalina.User;
 import com.easemywork.pojos.Users;
 import com.easmywork.dto.Credentials;
 import com.easmywork.dto.InsertUserDTO;
+import com.easmywork.dto.UpdateUserDTO;
 import com.easmywork.dto.UsersDTO;
 
 public interface IUserService {
 	Users addUser(InsertUserDTO user) throws IOException;
+	
+	UpdateUserDTO updateUser(Long id,UpdateUserDTO dto);
 
 	List<Object[]> getByStatus(String status);
 

@@ -15,6 +15,7 @@ import com.easemywork.repositories.ILocation;
 import com.easemywork.repositories.IUsers;
 import com.easmywork.dto.Credentials;
 import com.easmywork.dto.InsertUserDTO;
+import com.easmywork.dto.UpdateUserDTO;
 import com.easmywork.dto.UsersDTO;
 
 import jakarta.transaction.Transactional;
@@ -61,7 +62,6 @@ public class UserImpl implements IUserService {
 		return allUsers;
 	}
 
-
 	@Override
 	public Users login(Credentials cred) {
 		Users u = mapper.map(cred, Users.class);
@@ -91,6 +91,15 @@ public class UserImpl implements IUserService {
 		return null;
 	}
 
+	@Override
+	public UpdateUserDTO updateUser(Long id, UpdateUserDTO dto) {
+		Users u = userservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID!"));
+		u.setFirst_name(dto.getFirst_name());
+		u.setLast_name(dto.getLast_name());
+		u.setEmail(dto.getEmail());
+		userservice.save(u);
+		return dto;
+	}
 
 }
 /*

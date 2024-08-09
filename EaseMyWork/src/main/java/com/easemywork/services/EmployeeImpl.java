@@ -33,20 +33,21 @@ public class EmployeeImpl implements IEmployeeService {
 
 	@Override
 	public Employees addEmployee(InsertEmployeeDTO emp) {
-		Location l = new Location();
-		l.setCity(emp.getCity());
-		l.setState(emp.getState());
-		l.setPincode(emp.getPincode());
+
+//		Location l = new Location();
+//		l.setCity(emp.getCity());
+//		l.setState(emp.getState());
+//		l.setPincode(emp.getPincode());
+
+		Location l = mapper.map(emp, Location.class);
 		Location perLoc = locservice.save(l);
 
-		Services s = new Services();
-		s.setType(emp.getType());
-
 		Employees e = mapper.map(emp, Employees.class);
-		s.setEmployees(e);
+
 		e.setLocation(perLoc);
+		Services s = mapper.map(emp, Services.class);
 		if (emp.getType().equals(Type.BABYSITTER)) {
-			s.setAmount(10000.0);
+			s.setAmount(7000.0);
 		}
 		if (emp.getType().equals(Type.COOK)) {
 			s.setAmount(2000.0);
@@ -54,8 +55,8 @@ public class EmployeeImpl implements IEmployeeService {
 		if (emp.getType().equals(Type.MAID)) {
 			s.setAmount(5000.0);
 		}
-		Services perSer = serservice.save(s);
-		e.setServices(perSer);
+		e.setServices(s);
+		serservice.save(s);
 		return empservice.save(e);
 
 	}

@@ -1,11 +1,13 @@
 package com.easemywork.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.easemywork.pojos.Role;
 import com.easemywork.pojos.Users;
 
 @Repository
@@ -22,7 +24,9 @@ public interface IUsers extends JpaRepository<Users, Long> {
 
 	Users findByPassword(String password);
 
+	Optional<Users> findByRole(Role role);
+
 //	@Query(nativeQuery = true, value = "select * from users u where u.email=?1")
-	//Users findByEmail(String email);
+	// Users findByEmail(String email);
 
 }

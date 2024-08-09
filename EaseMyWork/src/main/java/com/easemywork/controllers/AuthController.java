@@ -18,7 +18,7 @@ import com.easmywork.dto.InsertUserDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/")
 public class AuthController {
 	@Autowired
 	private IUserService authcontroller;
@@ -49,7 +49,7 @@ public class AuthController {
 //	}
 //register user
 
-	@PostMapping("/register")
+	@PostMapping("/signup")
 	public ResponseEntity<Users> addUser(@Valid @RequestBody InsertUserDTO user) throws IOException {
 		Users newUser = authcontroller.addUser(user);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
