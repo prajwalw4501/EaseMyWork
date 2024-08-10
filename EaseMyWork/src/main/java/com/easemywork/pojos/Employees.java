@@ -43,10 +43,10 @@ public class Employees extends BaseEntity {
 	private Integer experience;
 	@Lob
 	private byte[] image;
-	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "loc_id")
 	private Location location;
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "service_id")
 	private Services services;
 //	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

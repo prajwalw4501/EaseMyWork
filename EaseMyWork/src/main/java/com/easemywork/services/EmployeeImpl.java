@@ -34,31 +34,31 @@ public class EmployeeImpl implements IEmployeeService {
 	@Override
 	public Employees addEmployee(InsertEmployeeDTO emp) {
 
-//		Location l = new Location();
-//		l.setCity(emp.getCity());
-//		l.setState(emp.getState());
-//		l.setPincode(emp.getPincode());
-
-		Location l = mapper.map(emp, Location.class);
+		Location l = new Location();
+		l.setCity(emp.getCity());
+		l.setState(emp.getState());
+		l.setPincode(emp.getPincode());
 		Location perLoc = locservice.save(l);
 
-		Employees e = mapper.map(emp, Employees.class);
-
-		e.setLocation(perLoc);
-		Services s = mapper.map(emp, Services.class);
+		Services s = new Services();
+		s.setType(emp.getType());
 		if (emp.getType().equals(Type.BABYSITTER)) {
 			s.setAmount(7000.0);
-		}
-		if (emp.getType().equals(Type.COOK)) {
-			s.setAmount(2000.0);
-		}
-		if (emp.getType().equals(Type.MAID)) {
+		} else if (emp.getType().equals(Type.COOK)) {
 			s.setAmount(5000.0);
 		}
-		e.setServices(s);
-		serservice.save(s);
+		s.setAmount(2000.0);
+		Services perSer = serservice.save(s);
+		Employees e = new Employees();
+		e.setFirst_name(emp.getFirst_name());
+		e.setLast_name(emp.getLast_name());
+		e.setAadhar_no(emp.getAadhar_no());
+		e.setPhone_no(emp.getPhone_no());
+		e.setGender(emp.getGender());
+		e.setExperience(emp.getExperience());
+		e.setLocation(perLoc);
+		e.setServices(perSer);
 		return empservice.save(e);
-
 	}
 
 	@Override

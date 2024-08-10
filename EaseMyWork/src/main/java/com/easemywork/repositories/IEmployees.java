@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.easemywork.repositories;
 
 import java.util.List;
