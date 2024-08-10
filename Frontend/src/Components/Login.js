@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import task from "../assets/pexels-olly-3770091.jpg";
 import logo from "../assets/digitalflaxlogo.png";
-
+import { Context } from "../App";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const { isAuthenticated, setIsAuthenticated, user, setUser } =
+    useContext(Context);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -21,9 +22,10 @@ const Login = () => {
         email,
         password,
       });
-     console.log(result);
-        navigate("/home");
-      
+      console.log(result, 'repose==============');
+
+      navigate("/home");
+
     } catch (err) {
       console.error(err);
       alert("Login failed. Please try again.");
@@ -44,7 +46,7 @@ const Login = () => {
             alt="Ease My Work Logo"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Welcome Back !! 
+            Welcome Back !!
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -65,7 +67,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div><br/><br/>
+            </div><br /><br />
             <div>
               <label htmlFor="password" className="sr-only">
                 Password

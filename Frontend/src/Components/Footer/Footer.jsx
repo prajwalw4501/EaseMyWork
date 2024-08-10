@@ -28,7 +28,7 @@ const FooterLinks = [
 ];
 const Footer = () => {
   return (
-    <div className="bg-gray-100 dark:bg-dark mt-14 rounded-t-3xl">
+    <div className="bg-gray-300 dark:bg-dark   rounded-t-3xl">
       <section className="container">
         <div className=" grid md:grid-cols-3 py-5">
           {/* company Details */}
@@ -37,8 +37,9 @@ const Footer = () => {
               EseMyWork
             </h1>
             <p className="text-sm">
-            Our platform connects you with dedicated helpers who take care of your household tasks efficiently, so you can focus on what matters most. Enjoy hassle-free service that truly makes your life easier.
-            {" "}
+              Our platform connects you with dedicated helpers who take care of
+              your household tasks efficiently, so you can focus on what matters
+              most. Enjoy hassle-free service that truly makes your life easier.{" "}
             </p>
             <br />
             <div className="flex items-center gap-3">
@@ -48,8 +49,8 @@ const Footer = () => {
             <div className="flex items-center gap-3 mt-3">
               <FaMobileAlt />
               <div className="space-y-1">
-              <p>+91 9588633019</p>
-              <p>+91 7218209234</p>
+                <p>+91 9588633019</p>
+                <p>+91 7218209234</p>
               </div>
             </div>
             {/* Social Handle */}
@@ -74,7 +75,10 @@ const Footer = () => {
                 </h1>
                 <ul className={`flex flex-col gap-3`}>
                   {FooterLinks.map((link) => (
-                    <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
+                    <li
+                      key={link}
+                      className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-500"
+                    >
                       <span>&#11162;</span>
                       <span>{link.title}</span>
                     </li>
@@ -82,8 +86,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-       
-            </div>
+          </div>
         </div>
       </section>
     </div>

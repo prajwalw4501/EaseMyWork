@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBrowserRouter, Outlet, useLocation } from "react-router-dom";
 import Login from "./Components/Login";
 import Home from "./Components/Home.js";
@@ -11,32 +11,49 @@ import Services from "./Components/Services.js";
 import Booking from "./Components/Booking.js";
 import Payment from "./Components/Payment.js";
 import User from "./Components/User.js";
+import { ScrollRestoration } from 'react-router-dom';
+import { createContext } from "react";
+import Register from "./Components/Register.js";
 
 
+export const Context = createContext({ isAuthenticated: false });
 function App() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/signup";
 
-    const users=[{
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      role: 'User',
-      city: 'New York',
-      state: 'NY',
-      pincode: '10001',
-      profilePicture: 'https://example.com/profile/john.jpg',
-    }]
+  // const users = [{
+  //   firstName: 'John',
+  //   lastName: 'Doe',
+  //   email: 'john.doe@example.com',
+  //   role: 'User',
+  //   city: 'New York',
+  //   state: 'NY',
+  //   pincode: '10001',
+  //   profilePicture: 'https://example.com/profile/john.jpg',
+  // }]
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
+
 
   return (
-    <>
+    <Context.Provider
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        user,
+        setUser,
+      }}
+    >
+      <ScrollRestoration />
+
       {!isHomePage && !isAuthPage && <Header />}
       <Outlet />
       {!isHomePage && !isAuthPage && <Footer />}
-     {/* {!isHomePage && !isAuthPage && <Sidebar />} */}
-    </>
+      {/* {!isHomePage && !isAuthPage && <Sidebar />} */}
+    </Context.Provider>
   );
 }
 
@@ -62,8 +79,12 @@ export const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:"/contact",
-        element:<Admins/>,
+        path: "/contact",
+        element: <Admins />,
+      },
+      {
+        path:"/register",
+        element:<Register/>,
       },
       {
         path: "/booking",
@@ -74,12 +95,12 @@ export const appRouter = createBrowserRouter([
         element: <Services />,
       },
       {
-        path:"/payment",
-        element:<Payment/>,
+        path: "/payment",
+        element: <Payment />,
       },
       {
-        path:"/user",
-        element:<User/>,
+        path: "/user",
+        element: <User />,
       },
     ],
   },
