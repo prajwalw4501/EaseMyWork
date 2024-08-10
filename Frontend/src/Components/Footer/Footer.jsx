@@ -11,7 +11,7 @@ import {
 const FooterLinks = [
   {
     title: "Home",
-    link: "/#",
+    link: "/home",
   },
   {
     title: "About",
@@ -19,10 +19,10 @@ const FooterLinks = [
   },
   {
     title: "Contact",
-    link: "/#contact",
+    link: "/contact",
   },
   {
-    title: "Blog",
+    title: "Help",
     link: "/#blog",
   },
 ];
@@ -34,11 +34,11 @@ const Footer = () => {
           {/* company Details */}
           <div className=" py-8 px-4 ">
             <h1 className="sm:text-3xl text-xl font-bold sm:text-left text-justify mb-3 flex items-center gap-3 font-serif">
-              Car Rental
+              EseMyWork
             </h1>
             <p className="text-sm">
-              Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Possimus, voluptate.{" "}
+            Our platform connects you with dedicated helpers who take care of your household tasks efficiently, so you can focus on what matters most. Enjoy hassle-free service that truly makes your life easier.
+            {" "}
             </p>
             <br />
             <div className="flex items-center gap-3">
@@ -47,7 +47,10 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-3 mt-3">
               <FaMobileAlt />
-              <p>+91 123456789</p>
+              <div className="space-y-1">
+              <p>+91 9588633019</p>
+              <p>+91 7218209234</p>
+              </div>
             </div>
             {/* Social Handle */}
             <div className="flex items-center gap-3 mt-6">

@@ -27,8 +27,12 @@ const Hero = () => {
               Manage Your Home!
             </h1>
             <p data-aos="fade-up" data-aos-delay="1000">
-              In the chaos of Daily life, we are here to Manage you home effortlessly.{" "}
-              Hire a COOK, MAID or BABY-SITTER to get your work DONE.!!
+            Simplify your household tasks while making a meaningful impact. Our platform connects you with individuals who truly needs
+             work and have hands-on experience in household chores. Whether it’s Cleaning, Cooking, or Babysitting, you can
+              choose from a pool of hardworking, dedicated individuals ready to assist you. Tailor your service options, select
+               the right helper for your needs, and enjoy a seamless booking and payment process. Manage your home with ease, knowing
+                you’re supporting those who need it most.
+
             </p>
             <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
               <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">

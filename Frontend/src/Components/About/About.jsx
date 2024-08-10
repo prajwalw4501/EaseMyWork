@@ -23,12 +23,12 @@ const About = () => {
                 About Us
               </h1>
               <p data-aos="fade-up" className="leading-8 tracking-wide">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Aspernatur, magnam! Tenetur odio quo et maxime?
-              </p>
-              <p data-aos="fade-up">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
-                tempora.
+              We understand that finding reliable help for your home can be challenging.
+              Your home deserves the best care, and finding reliable help should be simple. We’re here to make that happen 
+              by connecting you with dedicated individuals who are ready to make a difference in your daily life. 
+              We offer affordable, efficient, and trustworthy solutions that fit your needs perfectly. With our platform,
+               you can rest easy knowing your home is in the hands of those who truly care.
+
               </p>
               <button data-aos="fade-up" className="button-outline">
                 Get Started

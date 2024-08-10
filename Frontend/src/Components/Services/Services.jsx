@@ -10,7 +10,7 @@ const skillsData = [
       <FaCameraRetro className="text-5xl text-primary group-hover:text-black duration-300" />
     ),
     link: "#",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    description: "Get exceptional service without the premium price tag. Our rates are designed to be as accessible as they are fair, giving you high-quality help at a price that fits your budget.",
     aosDelay: "0",
   },
   {
@@ -19,7 +19,7 @@ const skillsData = [
       <GiNotebook className="text-5xl text-primary group-hover:text-black duration-300" />
     ),
     link: "#",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    description: "Time is precious, and we respect yours. Our team works swiftly and effectively, ensuring your tasks are completed to the highest standard with minimal disruption to your day.",
     aosDelay: "500",
   },
   {
@@ -28,7 +28,7 @@ const skillsData = [
       <SlNote className="text-5xl text-primary group-hover:text-black duration-500" />
     ),
     link: "#",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    description: "Trust your home to seasoned professionals. Our workers bring a wealth of experience and dedication to every job, delivering results you can count on.",
     aosDelay: "1000",
   },
 ];

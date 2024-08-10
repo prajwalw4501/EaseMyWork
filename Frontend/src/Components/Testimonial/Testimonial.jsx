@@ -2,21 +2,21 @@ import React from "react";
 
 const testimonialData = [
   {
-    name: "Darshan",
+    name: "- Darshan",
     image: "",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    description: "This platform made finding reliable help so easy! The workers are great, and it feels good to support those in need. Highly recommend!",
     aosDelay: "0",
   },
   {
-    name: "Faraz",
+    name: "- Faraz",
     image: "",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    description: "The service is affordable and efficient. Booking was simple, and the helpers were experienced and trustworthy.",
     aosDelay: "300",
   },
   {
-    name: "Pratiksha",
+    name: "- Pratiksha",
     image: "",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    description: "I love the peace of mind this service provides. The workers are reliable, and it’s great knowing I’m helping someone who really needs it.",
     aosDelay: "1000",
   },
 ];
@@ -34,9 +34,9 @@ const Testimonial = () => {
             >
               What Our Clients Say About Us
             </p>
-            <p data-aos="fade-up" className="text-center sm:px-44">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Perferendis iure consectetur tempora amet.
+            <p data-aos="fade-up" className="text-center sm:px-56">
+            Our clients rave about the exceptional service and heartfelt dedication of our team. With countless positive reviews and loyal customers, their experiences reflect our commitment to excellence and the real difference we make in their lives. Discover why our clients trust us to deliver outstanding results every time.
+
             </p>
           </div>
 
@@ -57,7 +57,7 @@ const Testimonial = () => {
                 </div>
                 <div className="text-2xl">⭐⭐⭐⭐⭐</div>
                 <p>{skill.description}</p>
-                <p className="text-center font-semibold">{skill.name}</p>
+                <p className="text-center font-bold">{skill.name}</p>
               </div>
             ))}
           </div>
