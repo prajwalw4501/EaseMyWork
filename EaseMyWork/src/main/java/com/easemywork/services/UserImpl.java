@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.easemywork.exceptions.ResourceNotFoundException;
 import com.easemywork.pojos.Location;
+import com.easemywork.pojos.Role;
 import com.easemywork.pojos.Users;
 import com.easemywork.repositories.ILocation;
 import com.easemywork.repositories.IUsers;
-import com.easmywork.dto.Credentials;
 import com.easmywork.dto.InsertUserDTO;
 import com.easmywork.dto.UpdateUserDTO;
 import com.easmywork.dto.UsersDTO;
@@ -43,7 +43,7 @@ public class UserImpl implements IUserService {
 		u.setLast_name(user.getLast_name());
 		u.setEmail(user.getEmail());
 		u.setPassword(user.getPassword());
-		u.setRole(user.getRole());
+		u.setRole(Role.ROLE_USER);
 		u.setLocation(perLoc);
 
 		return userservice.save(u);
@@ -62,13 +62,13 @@ public class UserImpl implements IUserService {
 	}
 
 	@Override
-	public Users login(Credentials cred) {
-		Users u = mapper.map(cred, Users.class);
-	Users user=	userservice.findByEmailAndPassword(cred.getEmail(), cred.getPassword());
-		if(user.getEmail().equals(cred.getEmail()) && user.getPassword().equals(cred.getPassword())) {
-			return u;
+	public Users login(String mail, String pass) {
+		Users user = userservice.findByEmail(mail);
+		if (user != null && user.getPassword().equals(pass)) {
+			return user;
+		} else {
+			throw new RuntimeException("Invalid ID n Password!!");
 		}
-		return null;
 
 	}
 
@@ -96,6 +96,12 @@ public class UserImpl implements IUserService {
 		u.setEmail(dto.getEmail());
 		userservice.save(u);
 		return dto;
+	}
+
+	@Override
+	public Users findByEmail(String mail) {
+		// TODO Auto-generated method stub
+		return userservice.findByEmail(mail);
 	}
 
 }

@@ -3,10 +3,7 @@ package com.easemywork.services;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.catalina.User;
-
 import com.easemywork.pojos.Users;
-import com.easmywork.dto.Credentials;
 import com.easmywork.dto.InsertUserDTO;
 import com.easmywork.dto.UpdateUserDTO;
 import com.easmywork.dto.UsersDTO;
@@ -19,9 +16,9 @@ public interface IUserService {
 	List<Object[]> getByStatus(String status);
 
 	List<Users> getAllUsers();
+Users findByEmail(String mail);
 
-
-	Users login(Credentials cred);
+	Users login(String mail,String pass);
 
 	UsersDTO findById(Long id);
 	List<Users> findRoleByMail(String mail);

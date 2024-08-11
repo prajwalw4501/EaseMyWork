@@ -1,6 +1,7 @@
 package com.easemywork.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class EmployeeImpl implements IEmployeeService {
 	private IServices serservice;
 
 	@Override
-	public Employees addEmployee(InsertEmployeeDTO emp) {
+	public InsertEmployeeDTO addEmployee(InsertEmployeeDTO emp) {
 
 		Location l = new Location();
 		l.setCity(emp.getCity());
@@ -58,7 +59,8 @@ public class EmployeeImpl implements IEmployeeService {
 		e.setExperience(emp.getExperience());
 		e.setLocation(perLoc);
 		e.setServices(perSer);
-		return empservice.save(e);
+		empservice.save(e);
+		return emp;
 	}
 
 	@Override
@@ -78,14 +80,13 @@ public class EmployeeImpl implements IEmployeeService {
 	@Override
 	public Employees updateEmployee(Long id, UpdateEmpDTO dto) {
 		Employees e = empservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID"));
-		e.setFirst_name(dto.getFirst_name());
-		e.setLast_name(dto.getLast_name());
-		e.setAadhar_no(dto.getAadhar_no());
-		e.setExperience(dto.getExperience());
-		e.setGender(dto.getGender());
-		e.setPhone_no(dto.getPhone_no());
-
-		return empservice.save(e);
+		if (e != null) {
+			Employees emp = mapper.map(dto, Employees.class);
+			//empservice.save(emp);
+			return emp;
+		} else {
+			throw new ResourceNotFoundException("Invalid ID!");
+		}
 
 	}
 
@@ -108,11 +109,11 @@ public class EmployeeImpl implements IEmployeeService {
 	}
 
 	@Override
-	public EmployeesDTO findById(Long id) {
+	public UpdateEmpDTO findById(Long id) {
 		Employees emp = empservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID"));
-		EmployeesDTO dto = mapper.map(emp, EmployeesDTO.class);
-		dto.setCity(emp.getLocation().getCity());
-		dto.setState(emp.getLocation().getState());
+		UpdateEmpDTO dto = mapper.map(emp, UpdateEmpDTO.class);
+		// dto.setCity(emp.getLocation().getCity());
+		// dto.setState(emp.getLocation().getState());
 		return dto;
 	}
 }

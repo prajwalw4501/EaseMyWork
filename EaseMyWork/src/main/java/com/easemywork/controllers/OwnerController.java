@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,9 +47,9 @@ public class OwnerController {
 
 //Add Employee with address(done)
 	@PostMapping("/registeremp")
-	public ResponseEntity<Employees> addEmployee(@RequestBody InsertEmployeeDTO emps) {
-		Employees dto = empcontroller.addEmployee(emps);
-		return new ResponseEntity<Employees>(dto, HttpStatus.CREATED);
+	public ResponseEntity<InsertEmployeeDTO> addEmployee(@RequestBody InsertEmployeeDTO emps) {
+		InsertEmployeeDTO dto = empcontroller.addEmployee(emps);
+		return new ResponseEntity<InsertEmployeeDTO>(dto, HttpStatus.CREATED);
 	}
 
 //Employees Details!!(done)
@@ -62,7 +63,7 @@ public class OwnerController {
 
 //Delete Employee (done)
 	@DeleteMapping("/deleteemp/{id}")
-	public ResponseEntity<Employees> deleteEmployee(@RequestParam Long id) {
+	public ResponseEntity<Employees> deleteEmployee(@PathVariable Long id) {
 		empcontroller.deleteEmp(id);
 		return new ResponseEntity<Employees>(HttpStatus.OK);
 	}
@@ -70,9 +71,9 @@ public class OwnerController {
 //Update Employee Details (done)
 	@PutMapping("/editemp/{id}")
 
-	public ResponseEntity<Employees> editEmp(@RequestParam Long id, @RequestBody UpdateEmpDTO empdto) {
+	public ResponseEntity<String> editEmp(@PathVariable Long id, @RequestBody UpdateEmpDTO empdto) {
 		Employees e = empcontroller.updateEmployee(id, empdto);
-		return new ResponseEntity<Employees>(e, HttpStatus.OK);
+		return ResponseEntity.ok().body("Update succesfully!");
 	}
 
 // List acc to gender
@@ -120,9 +121,9 @@ public class OwnerController {
 
 // get emp by id
 	@GetMapping("/empbyid/{id}")
-	public ResponseEntity<EmployeesDTO> getEmpById(Long id) {
-		EmployeesDTO dto = empcontroller.findById(id);
-		return new ResponseEntity<EmployeesDTO>(dto, HttpStatus.OK);
+	public ResponseEntity<UpdateEmpDTO> getEmpById(Long id) {
+		UpdateEmpDTO dto = empcontroller.findById(id);
+		return new ResponseEntity<UpdateEmpDTO>(dto, HttpStatus.OK);
 	}
 
 

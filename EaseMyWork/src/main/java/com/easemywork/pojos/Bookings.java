@@ -38,6 +38,11 @@ public class Bookings {
 	@Enumerated(EnumType.STRING)
 	@Column
 	private Status status;
+	@Column
+	private String razorpay_id;
+	@Column
+	private Double amount;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "emp_id")
 	private Employees employees;

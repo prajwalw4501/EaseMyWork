@@ -21,6 +21,7 @@ public interface IUsers extends JpaRepository<Users, Long> {
 	List<Object[]> getDetailsByid(Long id);
 
 	Users findByEmailAndPassword(String email,String pass);
+	Users findByEmail(String email);
 
 	//Users findByPassword(String password);
 

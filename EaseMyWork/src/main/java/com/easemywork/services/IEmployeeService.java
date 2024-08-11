@@ -8,7 +8,7 @@ import com.easmywork.dto.InsertEmployeeDTO;
 import com.easmywork.dto.UpdateEmpDTO;
 
 public interface IEmployeeService {
-	public Employees addEmployee(InsertEmployeeDTO emp);
+	public InsertEmployeeDTO addEmployee(InsertEmployeeDTO emp);
 
 	public List<Object[]> allEmps();
 
@@ -22,5 +22,5 @@ public interface IEmployeeService {
 
 	List<Object[]> getByType(String type);
 
-	EmployeesDTO findById(Long id);
+	UpdateEmpDTO findById(Long id);
 }
