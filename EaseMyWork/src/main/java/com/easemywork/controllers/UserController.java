@@ -1,6 +1,7 @@
 package com.easemywork.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easemywork.pojos.Ratings;
+import com.easemywork.services.IBookingService;
 import com.easemywork.services.IEmployeeService;
 import com.easemywork.services.IRatingService;
 import com.easemywork.services.IUserService;
@@ -37,6 +39,8 @@ public class UserController {
 	private IRatingService ratecontroller;
 	@Autowired
 	private IEmployeeService empcontroller;
+	@Autowired
+	private IBookingService bookcontroller;
 
 // get details of users (done)
 	@GetMapping("/details")
@@ -63,9 +67,15 @@ public class UserController {
 
 //post rating to employee
 	@PostMapping("/rate")
-	public ResponseEntity<Ratings> postReview(@RequestBody InsertRev rev) {
-		Ratings r = ratecontroller.postCmnt(rev);
+	public ResponseEntity<Ratings> postReview(@RequestBody Map<String, Object> rate) {
+		Ratings r = ratecontroller.postCmnt(rate);
 		return new ResponseEntity<Ratings>(r, HttpStatus.OK);
+	}
+// all bookings
+	@GetMapping("/bookings/{userid}")
+	public ResponseEntity<List<Object[]>> allBookings(@PathVariable Long userid){
+		List<Object[]> allBooks=bookcontroller.allBookings(userid);
+		return new ResponseEntity<List<Object[]>>(allBooks, HttpStatus.OK);
 	}
 
 }

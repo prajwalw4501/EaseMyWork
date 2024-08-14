@@ -29,7 +29,7 @@ import com.easmywork.dto.UpdateEmpDTO;
 
 @RestController
 @RequestMapping("/api/owner")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OwnerController {
 
 	public OwnerController() {
@@ -71,9 +71,11 @@ public class OwnerController {
 //Update Employee Details (done)
 	@PutMapping("/editemp/{id}")
 
-	public ResponseEntity<String> editEmp(@PathVariable Long id, @RequestBody UpdateEmpDTO empdto) {
+	public ResponseEntity<?> editEmp(@PathVariable Long id, @RequestBody UpdateEmpDTO empdto) {
+		System.out.println(empdto+"in Ownerrr Controllerrrrr!!");
 		Employees e = empcontroller.updateEmployee(id, empdto);
-		return ResponseEntity.ok().body("Update succesfully!");
+		System.out.println(e+"dfdekfevuwebcjowegubcowlb");
+		return new ResponseEntity<Employees>(e,HttpStatus.OK);
 	}
 
 // List acc to gender

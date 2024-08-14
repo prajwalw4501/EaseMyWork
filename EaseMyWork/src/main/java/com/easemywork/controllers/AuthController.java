@@ -33,7 +33,7 @@ public class AuthController {
 	public ResponseEntity<?> loginUser(@RequestBody Credentials cred) {
 		try {
 			Users u = authcontroller.login(cred.getEmail(), cred.getPassword());
-			UsersDTO dto=new UsersDTO(u.getUser_id(), u.getFirst_name(), u.getLast_name(), u.getEmail(), u.getRole());
+			UsersDTO dto=new UsersDTO(u.getUser_id(), u.getFirst_name(),u.getLast_name(), u.getEmail(), u.getRole());
 			return new ResponseEntity<UsersDTO>(dto, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<String>("Invalid email or password", HttpStatus.UNAUTHORIZED);

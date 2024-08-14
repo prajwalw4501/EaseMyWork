@@ -79,14 +79,11 @@ public class EmployeeImpl implements IEmployeeService {
 
 	@Override
 	public Employees updateEmployee(Long id, UpdateEmpDTO dto) {
+		System.out.println("Emp id is:"+id+"              "+dto);
 		Employees e = empservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID"));
-		if (e != null) {
-			Employees emp = mapper.map(dto, Employees.class);
-			//empservice.save(emp);
-			return emp;
-		} else {
-			throw new ResourceNotFoundException("Invalid ID!");
-		}
+		mapper.map(dto, Employees.class);
+		System.out.println(e+"updated emloyeeess serviceeeeeeee");
+		return empservice.save(e);
 
 	}
 
