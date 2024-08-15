@@ -2,9 +2,14 @@ package com.easemywork.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.easemywork.exceptions.ResourceNotFoundException;
@@ -13,6 +18,7 @@ import com.easemywork.pojos.Role;
 import com.easemywork.pojos.Users;
 import com.easemywork.repositories.ILocation;
 import com.easemywork.repositories.IUsers;
+import com.easemywork.security.CustomUserDetails;
 import com.easmywork.dto.InsertUserDTO;
 import com.easmywork.dto.UpdateUserDTO;
 import com.easmywork.dto.UsersDTO;
@@ -21,7 +27,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class UserImpl implements IUserService {
+public class UserImpl implements IUserService, UserDetailsService {
 	@Autowired
 	private IUsers userservice;
 	@Autowired
@@ -29,6 +35,8 @@ public class UserImpl implements IUserService {
 
 	@Autowired
 	private ModelMapper mapper;
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public Users addUser(InsertUserDTO user) throws IOException {
@@ -42,11 +50,19 @@ public class UserImpl implements IUserService {
 		u.setFirst_name(user.getFirst_name());
 		u.setLast_name(user.getLast_name());
 		u.setEmail(user.getEmail());
-		u.setPassword(user.getPassword());
+		u.setPassword(encoder.encode(user.getPassword()));
 		u.setRole(Role.ROLE_USER);
 		u.setLocation(perLoc);
 
 		return userservice.save(u);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		// Optional<Users> u = userservice.findByEmail(email).orElseThrow(() -> new
+		// UsernameNotFoundException("Invalid Email ID !!"));
+		Users user = userservice.findByEmail(email);
+		return new CustomUserDetails(user);
 	}
 
 	@Override
@@ -64,7 +80,7 @@ public class UserImpl implements IUserService {
 	@Override
 	public Users login(String mail, String pass) {
 		Users user = userservice.findByEmail(mail);
-		if (user != null && user.getPassword().equals(pass)) {
+		if (user != null ) {
 			return user;
 		} else {
 			throw new RuntimeException("Invalid ID n Password!!");
