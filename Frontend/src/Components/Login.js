@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import task from "../assets/wp2508260-admin-wallpapers.jpg";
+import task from "../assets/home.avif";
 import logo from "../assets/digitalflaxlogo.png";
 import { Context } from "../App";
 import { ToastContainer, toast } from "react-toastify";
@@ -30,6 +30,12 @@ const Login = () => {
         password,
       });
       setIsAuthenticated(true);
+      const dummy={  email: result.data.email,
+        role: result.data.role,
+        firstname: result.data.first_name,
+        lastname: result.data.last_name,
+        uid: result.data.user_id}
+
       setUser(() => ({
         email: result.data.email,
         role: result.data.role,
@@ -37,7 +43,8 @@ const Login = () => {
         lastname: result.data.last_name,
         uid: result.data.user_id,
       }));
-      localStorage.setItem("isAuthenticated", "true");
+      sessionStorage.setItem("isAuthenticated", "true");
+      sessionStorage.setItem("user",JSON.stringify(dummy));
     } catch (err) {
       console.error(err);
       toast.error("Login failed. Invalid Email & Password!");
@@ -54,15 +61,15 @@ const Login = () => {
       style={{ backgroundImage: `url(${task})` }}
     >
       <div className="absolute inset-0 bg-black opacity-60"></div>
-      <div className="max-w-md w-full space-y-8 bg-white bg-opacity-5 backdrop-filter backdrop-blur-md p-10 rounded-xl shadow-2xl relative z-10">
+      <div className="max-w-md w-full space-y-8 bg-white bg-opacity-0 backdrop-filter backdrop-blur-md p-10 rounded-xl shadow-2xl relative z-10">
         <ToastContainer position="top-center" />
         <div>
           <img
-            className="mx-auto h-20 w-auto"
+            className="mx-auto h-40 w-80"
             src={logo}
             alt="Ease My Work Logo"
           />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-800">
             Welcome Back !!
           </h2>
         </div>

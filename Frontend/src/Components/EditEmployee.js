@@ -42,7 +42,9 @@ const EditEmployee = () => {
     e.preventDefault();
     const empidd=employee[0];
     try {
-      await axios.put(`http://localhost:8080/api/owner/editemp/${empidd}`, formState);
+     await axios.put(`http://localhost:8080/api/owner/editemp/${empidd}`, formState);
+     console.log(employee[0]);
+
       console.log('Employee updated successfully');
       toast.success("Employee Updated Successfully!");
       navigate('/display'); // Navigate back to the employee list

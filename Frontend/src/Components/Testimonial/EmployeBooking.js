@@ -1,19 +1,22 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 import { Context } from "../../App";
 import { FaCalendarAlt, FaMoneyBillWave, FaClock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeBooking = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1000);
   const [service, setService] = useState("");
   const [isBooking, setIsBooking] = useState(false);
   const { selectedemployee, user } = useContext(Context);
   const [serviceSelected, setServiceSelected] = useState(false);
+  const navigate=useNavigate();
 
   useEffect(() => {
+    console.log(selectedemployee,"dfedsfewdfwrefw");
     if (selectedemployee.length === 0) return;
     setServiceSelected(true);
     setAmount(selectedemployee[7]);
@@ -51,16 +54,20 @@ const EmployeeBooking = () => {
     try {
       setIsBooking(true);
       const orderResponse = await axios.post(
-        "http://localhost:8080/api/user/createorder",
+        "http://localhost:8080/pay/createorder",
         {
+          //razorpay:response.razorpay_payment_id,
+         // orderid:order_id,
           enddate: endDate,
           startDate,
           userid: user.uid,
-          emp_id: selectedemployee[0],
+          empid: selectedemployee[0],
+          amount:selectedemployee[7],
         }
       );
 
       const { id: order_id, amount, currency } = orderResponse.data;
+      console.log(order_id,amount,currency,"sadsdsadsadas");
 
       const options = {
         key: "rzp_test_PoPCUX0so3eLSh",
@@ -69,14 +76,20 @@ const EmployeeBooking = () => {
         name: "Service Booking",
         order_id: order_id,
         handler: async function (response) {
+          console.log(order_id,response.razorpay_payment_id,response.razorpay_signature,"sdfdfsd");
           const paymentData = {
+            userid:user.uid,
+            amount:amount,
             order_id: order_id,
             payment_id: response.razorpay_payment_id,
             signature: response.razorpay_signature,
           };
-          // Implement payment verification here
+          await updatePaymentOnServer(paymentData);
           toast.success("Payment successful! Booking confirmed.");
+          navigate("/home");
+
         },
+        
         prefill: {
           name: user.firstname + " " + user.lastname,
           email: user.email,
@@ -95,9 +108,20 @@ const EmployeeBooking = () => {
       setIsBooking(false);
     }
   };
+  const updatePaymentOnServer = async (paymentData) => {
+    try {
+      await axios.post("http://localhost:8080/pay/updatepay", paymentData);
+      toast.success("Payment details saved successfully.");
+    } catch (err) {
+      console.error("Failed to update payment on server:", err);
+      toast.error("Failed to save payment details. Please contact support.");
+    }
+  };
+
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+      <ToastContainer position="top-center"/>
       <h2 className="text-2xl font-semibold mb-6 text-center">
         Book Service for Employee
       </h2>
@@ -124,7 +148,7 @@ const EmployeeBooking = () => {
             <FaMoneyBillWave className="text-gray-500 mr-2" />
             <input
               type="text"
-              value={`₹${amount}`}
+              value={`${amount}`}
               readOnly
               className="w-full bg-transparent outline-none"
             />
