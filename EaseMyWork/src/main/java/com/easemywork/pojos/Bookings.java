@@ -39,7 +39,7 @@ public class Bookings {
 	@Column
 	private Status status;
 	@Column
-	private String razorpay_id;
+	private String order_id;
 	@Column
 	private Double amount;
 	

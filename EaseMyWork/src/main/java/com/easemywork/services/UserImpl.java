@@ -1,6 +1,7 @@
 package com.easemywork.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,9 @@ public class UserImpl implements IUserService, UserDetailsService {
 
 	@Override
 	public Users addUser(InsertUserDTO user) throws IOException {
+		ArrayList<String> users=new ArrayList<String>();
+		users.add("prajwalw4501@gmail.com");
+		users.add("shriya01@gmail.com");
 		Location l = new Location();
 		l.setCity(user.getCity());
 		l.setState(user.getState());
@@ -51,7 +55,13 @@ public class UserImpl implements IUserService, UserDetailsService {
 		u.setLast_name(user.getLast_name());
 		u.setEmail(user.getEmail());
 		u.setPassword(encoder.encode(user.getPassword()));
-		u.setRole(Role.ROLE_USER);
+		for(String s:users) {
+			if(user.getEmail().equals(s)) {
+				u.setRole(Role.ROLE_OWNER);
+			}
+			else
+			u.setRole(Role.ROLE_USER);
+		}
 		u.setLocation(perLoc);
 
 		return userservice.save(u);

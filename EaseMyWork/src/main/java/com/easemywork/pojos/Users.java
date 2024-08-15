@@ -41,10 +41,5 @@ public class Users extends BaseEntity {
 	@JoinColumn(name = "loc_id")
 	private Location location;
 
-//	@OneToMany(mappedBy = "users")
-//	private List<Bookings> bookings;
-//	@OneToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "rev_id")
-//	private Ratings ratings;
 
 }

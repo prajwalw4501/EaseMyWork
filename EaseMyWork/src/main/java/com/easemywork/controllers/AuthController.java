@@ -28,8 +28,9 @@ import com.easmywork.dto.UsersDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/auth")
+@CrossOrigin(originPatterns = "http://localhost:3000/")
+//@CrossOrigin(origins = "http://localhost:3000/auth")
 public class AuthController {
 	@Autowired
 	private IUserService authcontroller;
@@ -45,22 +46,17 @@ public class AuthController {
 				cred.getPassword());
 		Authentication authenticationDetails = authManager.authenticate(authToken);
 		CustomUserDetails customUserDetails = (CustomUserDetails) authenticationDetails.getPrincipal();
-		Users user = customUserDetails.getUser();
+		// Users user = customUserDetails.getUser();
 		var roleList = authenticationDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toSet());
 		AuthResponse authResponse = new AuthResponse();
-//		roleList.forEach(role -> {
-//			authResponse.getUserRoles().add(RoleEnum.valueOf(role));
-//		});
 		authResponse.setJwtToken(utils.generateJwtToken(authenticationDetails));
 		authResponse.setMessage("Authentication Successfull !!");
-		//mapper.map(user, authResponse);
-	//	byte profilePictureBlob[] = Files.readAllBytes(Paths.get(user.getProfilePicPath()));
-		
-		//authResponse.setProfilePicture(profilePictureBlob);
+
 		try {
 			Users u = authcontroller.login(cred.getEmail(), cred.getPassword());
-			UsersDTO dto=new UsersDTO(u.getUser_id(), u.getFirst_name(),u.getLast_name(), u.getEmail(), u.getRole(),authResponse.getJwtToken());
+			UsersDTO dto = new UsersDTO(u.getUser_id(), u.getFirst_name(), u.getLast_name(), u.getEmail(), u.getRole(),
+					authResponse.getJwtToken(),u.getLocation().getCity(),u.getLocation().getState(),u.getLocation().getPincode());
 			return new ResponseEntity<UsersDTO>(dto, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<String>("Invalid email or password", HttpStatus.UNAUTHORIZED);

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import com.razorpay.RazorpayException;
 
 @RestController
 @RequestMapping("/pay")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class PaymentController {
 	@Autowired
 	private BookingRepo bookcontroller;
@@ -59,7 +61,7 @@ public class PaymentController {
 		book.setEnd_date(LocalDate.parse(data.get("enddate").toString()));
 		book.setStart_date(LocalDate.parse(data.get("startDate").toString()));
 		book.setStatus(Status.PENDING);
-		book.setRazorpay_id(order.get("id").toString());
+		book.setOrder_id(order.get("id").toString());
 		Employees e = empcontroller.findById(Long.parseLong(data.get("empid").toString()))
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Emp ID"));
 		Users u = usercontroller.findById(Long.parseLong(data.get("userid").toString()))
@@ -77,22 +79,22 @@ public class PaymentController {
 		System.out.println(paydata + "sas");
 		try {
 			String orderid = paydata.get("order_id").toString();
-			//String razorpayPaymentId = paydata.get("payment_id").toString();
-			//String signature = paydata.get("signature").toString();
+			String razorpayPaymentId = paydata.get("payment_id").toString();
+			// String signature = paydata.get("signature").toString();
 
-			Bookings bookings = bookcontroller.findByrazorpay_id(orderid);
+			Bookings bookings = bookcontroller.findByOrder_id(orderid);
 			bookings.setStatus(Status.BOOKED);
 			Payments payment = new Payments();
 			Users u = usercontroller.findById(Long.parseLong(paydata.get("userid").toString()))
 					.orElseThrow(() -> new ResourceNotFoundException("Invalid User ID"));
 			payment.setAdvance_amnt(bookings.getAmount());
 			payment.setFinal_amnt(bookings.getAmount());
-			payment.setUsers(u);
+			payment.setPayment_id(razorpayPaymentId);
 			bookings.setPayments(payment);
 			paycontroller.save(payment);
 			bookcontroller.save(bookings);
-			Employees e=new Employees();
-			
+			// Employees e = new Employees();
+
 			return "Payment updated Succesfully!!";
 
 		} catch (Exception e) {

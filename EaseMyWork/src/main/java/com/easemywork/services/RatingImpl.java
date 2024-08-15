@@ -1,9 +1,8 @@
 package com.easemywork.services;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import com.easemywork.pojos.Users;
 import com.easemywork.repositories.IEmployees;
 import com.easemywork.repositories.IRatings;
 import com.easemywork.repositories.IUsers;
-import com.easmywork.dto.InsertRev;
 
 @Service
 public class RatingImpl implements IRatingService {
@@ -29,33 +27,31 @@ public class RatingImpl implements IRatingService {
 	private IEmployees empservice;
 
 	@Override
-	public Ratings getCmntforEmp(Long Id) {
-		Ratings forEmp = rateservice.revForEmp(Id);
-		return forEmp;
+	public List<Object[]> getCmntforEmp(Long Id) {
+		System.out.println("employee id"+Id);
+		Employees e =empservice.findById(Id).orElseThrow(()-> new ResourceNotFoundException("Invalid ID"));
+		List<Object[]> r=rateservice.findRatingsByEmployees(Id);
+		return r;
+		
 	}
 
 	@Override
 	public Ratings postCmnt(Map<String, Object> rev) {
 		System.out.println(rev+"employeees ratingss");
-		String cmnt=rev.get("comment").toString();
+		Long empid=Long.parseLong(rev.get("employeeId").toString());
+		Long useid=Long.parseLong(rev.get("user").toString());
+		String comm=rev.get("comment").toString();
 		Integer score=Integer.parseInt(rev.get("score").toString());
-		Long emp=Long.parseLong(rev.get("employeeId").toString());
-		Long use=Long.parseLong(rev.get("user").toString());
-		System.out.println(emp+"empppppiddd");
-		System.out.println(use+"userrrr iddd");
-		Employees e=empservice.findById(emp).orElseThrow();
-		Users u=userservice.findById(use).orElseThrow();
-		System.out.println(e+"EMPLOYEESS");
-		System.out.println(u+"USERS");
+		Employees e=empservice.findById(empid).orElseThrow(()-> new ResourceNotFoundException("Invalid Emp ID"));
+		Users u=userservice.findById(useid).orElseThrow(()-> new ResourceNotFoundException("Invalid User id"));
 		Ratings r=new Ratings();
-		r.setComments(cmnt);
+		r.setComments(comm);
 		r.setEmployees(e);
-		r.setRev_date(LocalDate.now());
-		r.setScore(score);
 		r.setUser(u);
-		 return rateservice.save(r);
+		r.setScore(score);
+	return	rateservice.save(r);
 		
-
 	}
+	
 
 }
