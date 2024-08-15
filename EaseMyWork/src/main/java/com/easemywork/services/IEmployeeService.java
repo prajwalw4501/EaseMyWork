@@ -1,6 +1,7 @@
 package com.easemywork.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.easemywork.pojos.Employees;
 import com.easmywork.dto.EmployeesDTO;
@@ -14,7 +15,7 @@ public interface IEmployeeService {
 
 	String deleteEmp(Long id);
 
-	Employees updateEmployee(Long id, UpdateEmpDTO dto);
+	Employees updateEmployee(Long id, Map<String, Object> data);
 
 	List<Object[]> sortByGender(String gender);
 

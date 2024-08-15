@@ -1,6 +1,7 @@
 package com.easemywork.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.easemywork.exceptions.ResourceNotFoundException;
 import com.easemywork.pojos.Employees;
+import com.easemywork.pojos.Gender;
 import com.easemywork.pojos.Location;
 import com.easemywork.pojos.Services;
 import com.easemywork.pojos.Type;
@@ -78,12 +80,24 @@ public class EmployeeImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Employees updateEmployee(Long id, UpdateEmpDTO dto) {
-		System.out.println("Emp id is:"+id+"              "+dto);
-		Employees e = empservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID"));
-		mapper.map(dto, Employees.class);
-		System.out.println(e+"updated emloyeeess serviceeeeeeee");
-		return empservice.save(e);
+	public Employees updateEmployee(Long id, Map<String, Object> data) {
+		System.out.println("Emp id is:"+id+"              "+data);
+		Employees e=empservice.findById(id).orElseThrow(()->new ResourceNotFoundException("Invalid Id"));
+		String fname=data.get("firstName").toString();
+		String lname=data.get("lastName").toString();
+		Integer exp=Integer.parseInt(data.get("experience").toString());
+		Gender gen=Gender.valueOf(data.get("gender").toString());
+		Long ph=Long.parseLong(data.get("phoneNo").toString());
+		Long aadhar=Long.parseLong(data.get("aadharNo").toString());
+		e.setAadhar_no(aadhar);
+		e.setExperience(exp);
+		e.setFirst_name(fname);
+		e.setGender(gen);
+		e.setLast_name(lname);
+		e.setPhone_no(ph);
+	return	e;
+		
+		
 
 	}
 

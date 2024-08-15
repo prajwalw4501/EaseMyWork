@@ -3,6 +3,7 @@ package com.easemywork.services;
 import java.time.LocalDate;
 import java.util.Map;
 
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,18 +36,23 @@ public class RatingImpl implements IRatingService {
 
 	@Override
 	public Ratings postCmnt(Map<String, Object> rev) {
-		Long empid=Long.parseLong(rev.get("employeeId").toString());
-		Long userId=Long.parseLong(rev.get("user").toString());
+		System.out.println(rev+"employeees ratingss");
 		String cmnt=rev.get("comment").toString();
 		Integer score=Integer.parseInt(rev.get("score").toString());
-		Employees emp=empservice.findById(empid).orElseThrow(()-> new ResourceNotFoundException("Invalid Employee Id"));
-		Users use=userservice.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid USer id"));
+		Long emp=Long.parseLong(rev.get("employeeId").toString());
+		Long use=Long.parseLong(rev.get("user").toString());
+		System.out.println(emp+"empppppiddd");
+		System.out.println(use+"userrrr iddd");
+		Employees e=empservice.findById(emp).orElseThrow();
+		Users u=userservice.findById(use).orElseThrow();
+		System.out.println(e+"EMPLOYEESS");
+		System.out.println(u+"USERS");
 		Ratings r=new Ratings();
 		r.setComments(cmnt);
-		r.setEmployees(emp);
+		r.setEmployees(e);
 		r.setRev_date(LocalDate.now());
 		r.setScore(score);
-		r.setUser(use);
+		r.setUser(u);
 		 return rateservice.save(r);
 		
 

@@ -1,6 +1,7 @@
 package com.easemywork.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,9 +72,9 @@ public class OwnerController {
 //Update Employee Details (done)
 	@PutMapping("/editemp/{id}")
 
-	public ResponseEntity<?> editEmp(@PathVariable Long id, @RequestBody UpdateEmpDTO empdto) {
-		System.out.println(empdto+"in Ownerrr Controllerrrrr!!");
-		Employees e = empcontroller.updateEmployee(id, empdto);
+	public ResponseEntity<?> editEmp(@PathVariable Long id, @RequestBody Map<String, Object> data) {
+		System.out.println(data+"  "+id+"in Ownerrr Controllerrrrr!!");
+		Employees e = empcontroller.updateEmployee(id, data);
 		System.out.println(e+"dfdekfevuwebcjowegubcowlb");
 		return new ResponseEntity<Employees>(e,HttpStatus.OK);
 	}
