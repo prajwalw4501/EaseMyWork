@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Context } from "../App";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
   const [bookings, setBookings] = useState([]);
@@ -37,7 +37,7 @@ const Booking = () => {
   };
 
   const openModal = (order) => {
-    setSelectedEmployee({ id: order[0], name: `${order[2]} ${order[3]}` });
+    setSelectedEmployee({ id: order[0], name: `${order[2]} ${order[3]}`, empid: order[6] });
     setIsModalOpen(true);
   };
 
@@ -50,49 +50,54 @@ const Booking = () => {
 
   const handleCommentSubmit = async () => {
     const ratingData = {
-      employeeId: selectedEmployee.id,
+      employeeId: selectedEmployee.empid,
       comment,
       score,
-      user:user.uid,
+      user: user.uid,
     };
 
     try {
-      console.log(ratingData,"sdadsadsafasf");
-    const response=  await axios.post(`http://localhost:8080/api/user/rate`, ratingData);
-    console.log(response,"sadsadsafsafsafasfsa");
+      const response = await axios.post(`http://localhost:8080/api/user/rate`, ratingData);
       toast.success("Rating submitted successfully!");
       closeModal();
     } catch (err) {
       toast.error("Failed to submit rating. Please try again.");
     }
   };
+  const { isAuthenticated } = useContext(Context);
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      navigate("/login"); 
+      }
+  },[])
 
   return (
-    <div className="w-full min-h-screen ">
+    <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-8">
-        <h2 className="text-2xl font-bold mb-6 flex justify-center">Your Orders</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Your Orders</h2>
 
-        <table className="min-w-full bg-white border border-gray-200">
-          <thead>
-            <tr className="bg-slate-500">
-              <th className="py-2 px-4 border-b">Order ID</th>
-              <th className="py-2 px-4 border-b">Employee Name</th>
-              <th className="py-2 px-4 border-b">Phone No.</th>
-              <th className="py-2 px-4 border-b">Amount</th>
-              <th className="py-2 px-4 border-b"></th>
+        <table className="w-full bg-white border border-gray-300 shadow-lg rounded-lg">
+          <thead className="bg-gradient-to-r from-red-400 to-red-600 text-white">
+            <tr>
+              <th className="py-3 px-4 border-b">Order ID</th>
+              <th className="py-3 px-4 border-b">Employee Name</th>
+              <th className="py-3 px-4 border-b">Phone No.</th>
+              <th className="py-3 px-4 border-b">Amount</th>
+              <th className="py-3 px-4 border-b"></th>
             </tr>
           </thead>
           <tbody>
             {bookings.map((order) => (
-              <tr className="text-center px-2" key={order[0]}>
-                <td className="py-2 px-4 border-b">{order[1]}</td>
-                <td className="py-2 px-4 border-b">{order[2]} {order[3]}</td>
-                <td className="py-2 px-4 border-b">{order[4]}</td>
-                <td className="py-2 px-4 border-b">{order[5]}</td>
-                <td className="py-2 px-4 border-b">
+              <tr className="text-center hover:bg-gray-50 transition-transform transform hover:scale-105" key={order[0]}>
+                <td className="py-3 px-4 border-b text-gray-700">{order[1]}</td>
+                <td className="py-3 px-4 border-b text-gray-700">{order[2]} {order[3]}</td>
+                <td className="py-3 px-4 border-b text-gray-700">{order[4]}</td>
+                <td className="py-3 px-4 border-b text-gray-700">{order[5]}</td>
+                <td className="py-3 px-4 border-b">
                   <button
                     onClick={() => openModal(order)}
-                    className="text-red-600"
+                    className="text-red-600 hover:text-red-800 transition-colors"
                   >
                     Comment
                   </button>
@@ -101,43 +106,48 @@ const Booking = () => {
             ))}
           </tbody>
         </table>
+
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           contentLabel="Rate Employee"
           ariaHideApp={false}
-          className="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg"
+          className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg"
           overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
         >
-          <h2 className="text-2xl font-bold mb-4">Rate Employee</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">Rate Employee</h2>
           {selectedEmployee && (
             <>
-              <p className="mb-4">Employee: {selectedEmployee.name}</p>
+              <p className="mb-4 text-gray-600">Employee: {selectedEmployee.name}</p>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Score (1-10):</label>
-                <input
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={score}
-                  onChange={(e) => setScore(e.target.value)}
-                  className="w-full p-2 border rounded"
-                  required
-                />
+                <div className="flex items-center space-x-4">
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    value={score}
+                    onChange={(e) => setScore(e.target.value)}
+                    className="w-full accent-red-500"
+                    required
+                  />
+                  <span className="text-gray-800 font-medium">{score}</span>
+                </div>
               </div>
+
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Comments:</label>
                 <textarea
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600"
                   placeholder="Leave a comment"
                   required
                 />
               </div>
               <button
                 onClick={handleCommentSubmit}
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                className="w-full bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 transition-colors"
               >
                 Submit Rating
               </button>
@@ -145,6 +155,7 @@ const Booking = () => {
           )}
         </Modal>
       </div>
+      <ToastContainer />
     </div>
   );
 };
