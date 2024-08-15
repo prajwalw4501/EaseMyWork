@@ -21,13 +21,12 @@ import com.easemywork.services.IBookingService;
 import com.easemywork.services.IEmployeeService;
 import com.easemywork.services.IRatingService;
 import com.easemywork.services.IUserService;
-import com.easmywork.dto.InsertRev;
 import com.easmywork.dto.UpdateUserDTO;
 import com.easmywork.dto.UsersDTO;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class UserController {
 	public UserController() {
 		System.out.println("in User UserController!");
@@ -53,15 +52,13 @@ public class UserController {
 	@PutMapping("/edituser/{id}")
 	public ResponseEntity<?> updateUser(@RequestParam Long id, @RequestBody UpdateUserDTO dto) {
 		UpdateUserDTO u = usercontroller.updateUser(id, dto);
-		return new ResponseEntity<UpdateUserDTO>(dto, HttpStatus.OK);
+		return new ResponseEntity<UpdateUserDTO>(u, HttpStatus.OK);
 	}
 
-//emp details acc to city (done)
-	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/empbycity/")
 	public ResponseEntity<List<Object[]>> allEmpByCity(@RequestParam String city) {
 		List<Object[]> empByCities = empcontroller.getByCity(city);
-		System.out.println("city"+city);
+		System.out.println("city" + city);
 		return new ResponseEntity<List<Object[]>>(empByCities, HttpStatus.OK);
 	}
 
@@ -71,10 +68,11 @@ public class UserController {
 		Ratings r = ratecontroller.postCmnt(rate);
 		return new ResponseEntity<Ratings>(r, HttpStatus.OK);
 	}
+
 // all bookings
 	@GetMapping("/bookings/{userid}")
-	public ResponseEntity<List<Object[]>> allBookings(@PathVariable Long userid){
-		List<Object[]> allBooks=bookcontroller.allBookings(userid);
+	public ResponseEntity<List<Object[]>> allBookings(@PathVariable Long userid) {
+		List<Object[]> allBooks = bookcontroller.allBookings(userid);
 		return new ResponseEntity<List<Object[]>>(allBooks, HttpStatus.OK);
 	}
 

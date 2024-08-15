@@ -24,13 +24,12 @@ import com.easemywork.services.IEmployeeService;
 import com.easemywork.services.IOperatonsService;
 import com.easemywork.services.IRatingService;
 import com.easemywork.services.IUserService;
-import com.easmywork.dto.EmployeesDTO;
 import com.easmywork.dto.InsertEmployeeDTO;
 import com.easmywork.dto.UpdateEmpDTO;
 
 @RestController
 @RequestMapping("/api/owner")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class OwnerController {
 
 	public OwnerController() {
@@ -43,8 +42,6 @@ public class OwnerController {
 	private IUserService usercontroller;
 	@Autowired
 	private IRatingService ratecontroller;
-	@Autowired
-	private IOperatonsService sercontroller;
 
 //Add Employee with address(done)
 	@PostMapping("/registeremp")
@@ -72,11 +69,11 @@ public class OwnerController {
 //Update Employee Details (done)
 	@PutMapping("/editemp/{id}")
 
-	public ResponseEntity<?> editEmp(@PathVariable Long id, @RequestBody Map<String, Object> data) {
-		System.out.println(data+"  "+id+"in Ownerrr Controllerrrrr!!");
-		Employees e = empcontroller.updateEmployee(id, data);
-		System.out.println(e+"dfdekfevuwebcjowegubcowlb");
-		return new ResponseEntity<Employees>(e,HttpStatus.OK);
+	public ResponseEntity<?> editEmp(@PathVariable Long id, @RequestBody UpdateEmpDTO data) {
+		System.out.println(data + "  " + id + "in Ownerrr Controllerrrrr!!");
+		UpdateEmpDTO e = empcontroller.updateEmployee(id, data);
+		System.out.println(e + "dfdekfevuwebcjowegubcowlb");
+		return new ResponseEntity<UpdateEmpDTO>(e, HttpStatus.OK);
 	}
 
 // List acc to gender
@@ -114,12 +111,11 @@ public class OwnerController {
 		return new ResponseEntity<List<Users>>(sortedUsers, HttpStatus.OK);
 	}
 
-
 // get cmnts of emp
-	@GetMapping("/cmntforemp/{id}")
-	public ResponseEntity<Ratings> getCmntOfEmp(@RequestParam Long id) {
-		Ratings rate = ratecontroller.getCmntforEmp(id);
-		return new ResponseEntity<Ratings>(rate, HttpStatus.OK);
+	@GetMapping("/rating/{id}")
+	public ResponseEntity<?> getCmntOfEmp(@PathVariable Long id) {
+		List<Object[]> listrate = ratecontroller.getCmntforEmp(id);
+		return new ResponseEntity<List<Object[]>>(listrate, HttpStatus.OK);
 	}
 
 // get emp by id
@@ -128,6 +124,5 @@ public class OwnerController {
 		UpdateEmpDTO dto = empcontroller.findById(id);
 		return new ResponseEntity<UpdateEmpDTO>(dto, HttpStatus.OK);
 	}
-
 
 }

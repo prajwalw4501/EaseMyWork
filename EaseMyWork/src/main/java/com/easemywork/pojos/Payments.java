@@ -35,8 +35,7 @@ public class Payments {
 	private Double final_amnt;
 	@UpdateTimestamp
 	private LocalDate pay_date;
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Users users;
+	
+	private String payment_id;
 
 }

@@ -15,7 +15,7 @@ public interface IEmployeeService {
 
 	String deleteEmp(Long id);
 
-	Employees updateEmployee(Long id, Map<String, Object> data);
+	UpdateEmpDTO updateEmployee(Long id, UpdateEmpDTO data);
 
 	List<Object[]> sortByGender(String gender);
 

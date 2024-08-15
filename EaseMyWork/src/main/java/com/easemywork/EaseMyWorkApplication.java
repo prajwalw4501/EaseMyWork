@@ -2,40 +2,40 @@ package com.easemywork;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.easemywork.repositories.IUsers;
 import com.razorpay.RazorpayClient;
 
 @SpringBootApplication
 public class EaseMyWorkApplication /* implements CommandLineRunner */ {
-	@Autowired
-	private IUsers userrepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EaseMyWorkApplication.class, args);
 	}
 
+// ModelMapper Bean
 	@Bean
 	public ModelMapper mapper() {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return modelMapper;
 	}
-//
+
+// PasswordEncode Bean
 	@Bean
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
-	 @Bean
-	 public RazorpayClient razorpayClient() throws Exception{
-		 return new RazorpayClient("rzp_test_PoPCUX0so3eLSh", "ezJFXLNdCkhI1FIWwjPHykUI");
-	 }
+
+// Razorpay Gateway Bean	
+	@Bean
+	public RazorpayClient razorpayClient() throws Exception {
+		return new RazorpayClient("rzp_test_PoPCUX0so3eLSh", "ezJFXLNdCkhI1FIWwjPHykUI");
+	}
 //
 //	@Override
 //	public void run(String... args) throws Exception {
