@@ -71,9 +71,9 @@ public class OwnerController {
 
 	public ResponseEntity<?> editEmp(@PathVariable Long id, @RequestBody UpdateEmpDTO data) {
 		System.out.println(data + "  " + id + "in Ownerrr Controllerrrrr!!");
-		Employees e = empcontroller.updateEmployee(id, data);
+		UpdateEmpDTO e = empcontroller.updateEmployee(id, data);
 		System.out.println(e + "dfdekfevuwebcjowegubcowlb");
-		return new ResponseEntity<Employees>(e, HttpStatus.OK);
+		return new ResponseEntity<UpdateEmpDTO>(e, HttpStatus.OK);
 	}
 
 // List acc to gender

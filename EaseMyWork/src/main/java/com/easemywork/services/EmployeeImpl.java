@@ -80,17 +80,18 @@ public class EmployeeImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Employees updateEmployee(Long id, UpdateEmpDTO data) {
-		System.out.println("Emp id is:"+id+"              "+data);
-		Employees e=empservice.findById(id).orElseThrow(()-> new ResourceNotFoundException("Invalid ID"));
-e.setAadhar_no(data.getAadhar_no());
-e.setExperience(data.getExperience());
-e.setFirst_name(data.getFirst_name());
-e.setGender(data.getGender());
-e.setLast_name(data.getLast_name());
-e.setPhone_no(data.getPhone_no());
-return empservice.save(e);
-		}
+	public UpdateEmpDTO updateEmployee(Long id, UpdateEmpDTO data) {
+		System.out.println("Emp id is:" + id + "              " + data);
+		Employees e = empservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID"));
+		e.setAadhar_no(data.getAadhar_no());
+		e.setExperience(data.getExperience());
+		e.setFirst_name(data.getFirst_name());
+		e.setGender(data.getGender());
+		e.setLast_name(data.getLast_name());
+		e.setPhone_no(data.getPhone_no());
+		empservice.save(e);
+		return data;
+	}
 
 	@Override
 	public List<Object[]> sortByGender(String gender) {
