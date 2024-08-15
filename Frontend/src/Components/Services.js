@@ -76,18 +76,25 @@ const Services = () => {
     setSelectedemployee(Object.values(employee));
     navigate("/book");
   };
+  const { isAuthenticated } = useContext(Context);
+
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      navigate("/login"); 
+      }
+  },[])
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 p-6">
       <ToastContainer position="top-center" />
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4 md:mb-0">
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-4 md:mb-0">
             Find Service Providers
           </h1>
-          <div className="flex w-full md:w-auto">
+          <div className="flex w-full md:w-auto mt-4 md:mt-0">
             <select
-              className="w-full md:w-auto p-2 rounded-l border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+              className="w-full md:w-48 p-3 rounded-l-md border-2 border-slate-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 ease-in-out"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               required
@@ -103,7 +110,7 @@ const Services = () => {
             </select>
             <button
               onClick={() => handleLocationSearch(city)}
-              className="bg-slate-900 text-white p-2 rounded-r hover:bg-slate-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600"
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 rounded-r-md hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
               disabled={isLoading}
             >
               {isLoading ? "Searching..." : "Search"}
@@ -113,7 +120,7 @@ const Services = () => {
 
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-slate-900"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-600"></div>
           </div>
         ) : employees.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -122,7 +129,7 @@ const Services = () => {
                 key={employee[0]}
                 className="bg-white p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
               >
-                <h2 className="text-xl font-bold text-gray-900 mb-2">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
                   {employee[1]} {employee[2]}
                 </h2>
                 <p className="text-gray-700 mb-1">

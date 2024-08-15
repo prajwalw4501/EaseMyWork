@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Context } from '../App';
 
 const Rating = () => {
   const { id } = useParams(); // Get the employee ID from the URL
@@ -22,8 +23,14 @@ const Rating = () => {
     console.log('Rating submitted:', ratingData);
 
     // After submission, navigate back or to a success page
-    navigate('/somepath');
+    navigate('/display');
   };
+  const { isAuthenticated } = useContext(Context);
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      navigate("/login"); 
+      }
+  },[])
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">

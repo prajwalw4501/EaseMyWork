@@ -11,36 +11,37 @@ const EditEmployee = () => {
   const { employee } = location.state;
 
   const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     experience: '',
     gender: '',
-    phoneNo: '',
-    aadharNo: '',
+    phone_no: '',
+    aadhar_no: '',
   });
 
   useEffect(() => {
     if (employee) {
       setFormState({
         //empid:employee[0],
-        firstName: employee[1],
-        lastName: employee[2],
+        first_name: employee[1],
+        last_name: employee[2],
         experience: employee[3],
         gender: employee[4],
-        phoneNo: employee[5],
-        aadharNo: employee[6], // Assuming the Aadhar number is in the 10th position
+        phone_no: employee[5],
+        aadhar_no: employee[6], // Assuming the Aadhar number is in the 10th position
       });
     }
   }, [employee]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const empidd=employee[0];
+    console.log(formState,typeof(formState),"make any changessssss");
     try {
      await axios.put(`http://localhost:8080/api/owner/editemp/${empidd}`, formState);
      console.log(employee[0]);
@@ -51,8 +52,15 @@ const EditEmployee = () => {
     } catch (err) {
       console.error('Error updating employee', err);
       toast.error("Error Updating Employee, Please try again!");
+      navigate('/display'); // Navigate back to the employee list
+
     }
   };
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      navigate("/login"); 
+      }
+  },[])
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 flex items-center justify-center p-6">
@@ -64,8 +72,8 @@ const EditEmployee = () => {
           <div className="flex-1">
             <label className="block text-gray-700 font-semibold mb-2">First Name</label>
             <input
-              name="firstName"
-              value={formState.firstName}
+              name="first_name"
+              value={formState.first_name}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
               required
@@ -74,8 +82,8 @@ const EditEmployee = () => {
           <div className="flex-1">
             <label className="block text-gray-700 font-semibold mb-2">Last Name</label>
             <input
-              name="lastName"
-              value={formState.lastName}
+              name="last_name"
+              value={formState.last_name}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
              required
@@ -112,25 +120,25 @@ const EditEmployee = () => {
           <div className="flex-1">
             <label className="block text-gray-700 font-semibold mb-2">Phone No.</label>
             <input
-              name="phoneNo"
-              value={formState.phoneNo}
+              name="phone_no"
+              value={formState.phone_no}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
               required
-              min={10}
-              max={10}
+              minLength={10}
+              maxLength={10}
             />
           </div>
           <div className="flex-1">
             <label className="block text-gray-700 font-semibold mb-2">Aadhar No</label>
             <input
-              name="aadharNo"
-              value={formState.aadharNo}
+              name="aadhar_no"
+              value={formState.aadhar_no}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
               required
-              min={12}
-              max={12}
+              minLength={12}
+                maxLength={12}
             />
           </div>
         </div>
