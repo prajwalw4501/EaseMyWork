@@ -27,7 +27,7 @@ import com.easmywork.dto.UsersDTO;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 	public UserController() {
 		System.out.println("in User UserController!");
