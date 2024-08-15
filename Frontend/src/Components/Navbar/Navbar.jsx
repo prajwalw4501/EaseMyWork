@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/digitalflaxlogo.png";
 
 export const Navlinks = [
-  { id: 1, name: "Home", link: "/" },
+  { id: 1, name: "Home", link: "/home" },
   { id: 2, name: "Services", link: "/services" },
-  { id: 3, name: "About", link: "/about" },
+  { id: 3, name: "About", link: "/contact" },
   { id: 4, name: "Bookings", link: "/booking" },
 ];
 
@@ -26,14 +26,14 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-gray-900 shadow-lg" : "bg-transparent"
+        isScrolled ? "bg-zinc-400 shadow-lg" : "bg-black"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <div className="h-8 w-32 flex items-center justify-center animate-float">
+              <div className="h-20 max-w-64 flex items-center justify-center animate-none">
                 <img
                   src={logo}
                   alt="EaseMyWork Logo"
