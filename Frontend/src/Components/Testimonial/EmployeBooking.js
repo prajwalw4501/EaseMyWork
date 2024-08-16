@@ -33,9 +33,8 @@ const EmployeeBooking = () => {
   const handleStartDateChange = (e) => {
     const selectedStartDate = new Date(e.target.value);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of day
+    today.setHours(0, 0, 0, 0);
 
-    // Check if the selected start date is today or in the future
     if (selectedStartDate < today) {
       toast.error("Start date must be today or a future date.");
       return;
@@ -125,7 +124,7 @@ const EmployeeBooking = () => {
     if (!isAuthenticated) {
       navigate("/login"); 
       }
-  },[])
+  })
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">

@@ -18,6 +18,8 @@ import DisplayEmployee from "./Components/DisplayEmployee.js";
 import EditEmployee from "./Components/EditEmployee.js";
 import EmployeeBooking from "./Components/Testimonial/EmployeBooking.js";
 import Rating from "./Components/Rating.js";
+import DisplayUsers from "./Components/DisplayUsers.js";
+import EditUser from "./Components/EditUser.js";
 
 
 export const Context = createContext({ isAuthenticated: false });
@@ -109,6 +111,10 @@ export const appRouter = createBrowserRouter([
         element:<Register/>,
       },
       {
+        path:"/users",
+        element:<DisplayUsers/>,
+      },
+      {
         path: "/booking",
         element: <Booking />,
       },
@@ -119,6 +125,10 @@ export const appRouter = createBrowserRouter([
       {
         path:"/editemp/:empid",
         element:<EditEmployee/>,
+      },
+      {
+        path:"/edituser/:user",
+        element:<EditUser/>,
       },
       {
         path: "/services",

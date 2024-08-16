@@ -17,7 +17,7 @@ const UserInfoItem = ({ icon, label, value }) => (
 );
 
 const User = () => {
-  const { isAuthenticated, setIsAuthenticated, user, setUser } =
+  const {  setIsAuthenticated, user, setUser } =
     useContext(Context);
   const navigate = useNavigate();
 
