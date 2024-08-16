@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import task from "../assets/task.png";
 import logo from "../assets/digitalflaxlogo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Context } from "../App";
 
 const SignUp = () => {
   const [first_name, setFirstName] = useState("");
@@ -50,12 +49,6 @@ const SignUp = () => {
       toast.error("Sign up failed. Please try again.");
     }
   };
-  const { isAuthenticated } = useContext(Context);
-  useEffect(()=>{
-    if (!isAuthenticated) {
-      navigate("/login"); 
-      }
-  },[])
 
   return (
     <div
@@ -123,6 +116,7 @@ const SignUp = () => {
                 type="password"
                 autoComplete="new-password"
                 required
+                minLength={6}
                 className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 text-gray-900 placeholder-gray-400 bg-white bg-opacity-80 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
                 placeholder="Password"
                 value={password}
@@ -160,9 +154,12 @@ const SignUp = () => {
                   name="pincode"
                   type="text"
                   required
+                  minLength={6}
+                  maxLength={6}
                   className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 text-gray-900 placeholder-gray-400 bg-white bg-opacity-80 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
                   placeholder="Pincode"
                   value={pincode}
+                 
                   onChange={(e) => setPincode(e.target.value)}
                 />
               </div>

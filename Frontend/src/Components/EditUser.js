@@ -6,33 +6,27 @@ import "react-toastify/ReactToastify.css";
 import { Context } from '../App';
 
 
-const EditEmployee = () => {
+const EditUser = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { employee } = location.state;
+  const { user } = location.state;
 
   const [formState, setFormState] = useState({
     first_name: '',
     last_name: '',
-    experience: '',
-    gender: '',
-    phone_no: '',
-    aadhar_no: '',
+    email: '',
   });
 
   useEffect(() => {
-    if (employee) {
+    if (user) {
       setFormState({
         //empid:employee[0],
-        first_name: employee[1],
-        last_name: employee[2],
-        experience: employee[3],
-        gender: employee[4],
-        phone_no: employee[5],
-        aadhar_no: employee[6], // Assuming the Aadhar number is in the 10th position
-      });
+        first_name: user[1],
+        last_name: user[2],
+        email: user[3],
+          });
     }
-  }, [employee]);
+  }, [user]);
 
   const handleChange = (e) => {
     const {name, value } = e.target;
@@ -41,19 +35,19 @@ const EditEmployee = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const empidd=employee[0];
+    const empidd=user[0];
     console.log(formState,typeof(formState),"make any changessssss");
     try {
-     await axios.put(`http://localhost:8080/api/owner/editemp/${empidd}`, formState);
-     console.log(employee[0]);
+     await axios.put(`http://localhost:8080/api/user/edituser/${empidd}`, formState);
+     console.log(user[0]);
 
-      console.log('Employee updated successfully');
-      toast.success("Employee Updated Successfully!");
-      navigate('/display'); // Navigate back to the employee list
+      console.log('User updated successfully');
+      toast.success("Client Updated Successfully!");
+      navigate('/users'); // Navigate back to the employee list
     } catch (err) {
-      console.error('Error updating employee', err);
-      toast.error("Error Updating Employee, Please try again!");
-      navigate('/display'); // Navigate back to the employee list
+      console.error('Error updating user', err);
+      toast.error("Error Updating Client, Please try again!");
+      navigate('/users'); // Navigate back to the employee list
 
     }
   };
@@ -68,7 +62,7 @@ const EditEmployee = () => {
     <div className="min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 flex items-center justify-center p-6">
       <ToastContainer position='top-center'/>
     <div className="w-full max-w-md bg-white shadow-2xl rounded-lg p-8 border border-gray-300 overflow-hidden">
-      <h2 className="text-3xl font-extrabold mb-6 text-gray-900 text-center">Edit Employee</h2>
+      <h2 className="text-3xl font-extrabold mb-6 text-gray-900 text-center">Edit Client</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex gap-6">
           <div className="flex-1">
@@ -93,57 +87,18 @@ const EditEmployee = () => {
           </div>
         </div>
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Experience</label>
+          <label className="block text-gray-700 font-semibold mb-2">E-Mail</label>
           <input
-            name="experience"
-            value={formState.experience}
+            name="email"
+            value={formState.email}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
-            type="number"
+            type="email"
            required
-            min={0}
+            
           />
         </div>
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">Gender</label>
-          <select
-            name="gender"
-            value={formState.gender}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
-           required
-          >
-            <option value="" disabled>Select Gender</option>
-            <option value="MALE">Male</option>
-            <option value="FEMALE">Female</option>
-          </select>
-        </div>
-        <div className="flex gap-6">
-          <div className="flex-1">
-            <label className="block text-gray-700 font-semibold mb-2">Phone No.</label>
-            <input
-              name="phone_no"
-              value={formState.phone_no}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
-              required
-              minLength={10}
-              maxLength={10}
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-gray-700 font-semibold mb-2">Aadhar No</label>
-            <input
-              name="aadhar_no"
-              value={formState.aadhar_no}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 transition duration-300"
-              required
-              minLength={12}
-                maxLength={12}
-            />
-          </div>
-        </div>
+       
         <div className="text-center">
           <button
             type="submit"
@@ -160,4 +115,4 @@ const EditEmployee = () => {
   );
 };
 
-export default EditEmployee;
+export default EditUser;

@@ -45,6 +45,13 @@ export const Header = () => {
           >
             Manage Employee
           </NavLink>
+          <NavLink
+            to="/users"
+            className="text-white font-medium text-lg px-4 py-2 rounded-lg transition duration-300 ease-in-out transform hover:bg-purple-700 hover:text-purple-200 hover:-translate-y-1 hover:scale-110"
+            activeClassName="bg-purple-800 text-purple-300"
+          >
+            Manage Clients
+          </NavLink>
         </>
       )}
       {user.role === "ROLE_USER" && (

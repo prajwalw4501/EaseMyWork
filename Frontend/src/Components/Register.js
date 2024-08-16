@@ -6,6 +6,7 @@ import "react-toastify/ReactToastify.css";
 import { Context } from '../App';
 
 const Register = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [aadharNo, setAadharNo] = useState("");
@@ -59,6 +60,7 @@ const Register = () => {
         }
 
         try {
+            setIsLoading(true);
             const empresult = await axios.post("http://localhost:8080/api/owner/registeremp", {
                 first_name: firstName,
                 last_name: lastName,
@@ -77,6 +79,8 @@ const Register = () => {
         } catch (err) {
             console.error(err);
             toast.error("Sign up failed. Please try again.");
+        } finally{
+            setIsLoading(false);
         }
     };
     const { isAuthenticated } = useContext(Context);
@@ -91,7 +95,7 @@ const Register = () => {
         <div className="max-w-lg mx-auto min-h-screen bg-slate-400  p-6 shadow-2xl rounded-lg">
             <ToastContainer position="top-center" />
             <h2 className="text-4xl font-extrabold text-center text-white mb-6 drop-shadow-lg">Register Employee</h2>
-            <form onSubmit={handleSubmit} className="space-y-6 ">
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="flex space-x-4">
                     <div className="w-1/2">
                         <label className="block text-sm font-medium text-white">First Name</label>
