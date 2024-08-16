@@ -20,15 +20,14 @@ public interface IUsers extends JpaRepository<Users, Long> {
 			+ "u.email,l.city,l.state from users u inner join location l on(u.user_id=l.users_user_id) where u.user_id=?1")
 	List<Object[]> getDetailsByid(Long id);
 
-	Users findByEmailAndPassword(String email,String pass);
+	Users findByEmailAndPassword(String email, String pass);
+
 	Users findByEmail(String email);
-
-	//Users findByPassword(String password);
-
-	Optional<Users> findByRole(Role role);
+	@Query(nativeQuery = true, value = "select u.user_id,u.first_name,u.last_name,"
+			+ "u.email,u.created_date,l.city,l.state from users u "
+			+ "join location l on(u.loc_id=l.loc_id)")
+	List<Object[]> getUsers();
 	
-
-//	@Query(nativeQuery = true, value = "select * from users u where u.email=?1")
-	// Users findByEmail(String email);
+	Optional<Users> findByRole(Role role);
 
 }
