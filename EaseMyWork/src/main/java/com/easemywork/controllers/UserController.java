@@ -50,7 +50,7 @@ public class UserController {
 
 //update User (done)
 	@PutMapping("/edituser/{id}")
-	public ResponseEntity<?> updateUser(@RequestParam Long id, @RequestBody UpdateUserDTO dto) {
+	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO dto) {
 		UpdateUserDTO u = usercontroller.updateUser(id, dto);
 		return new ResponseEntity<UpdateUserDTO>(u, HttpStatus.OK);
 	}

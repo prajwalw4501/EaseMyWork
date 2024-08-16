@@ -32,12 +32,10 @@ public class WebSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-		}).and().authorizeRequests()
-		.requestMatchers("/auth/**").permitAll()
-		.requestMatchers("/api/user/**").permitAll()
-		.requestMatchers("/api/owner/**").permitAll()
-		.requestMatchers("/pay/**").permitAll()
-				.requestMatchers("/**", "/swagger*/**", "/v*/api-docs/**").permitAll() // enabling
+		}).and().authorizeRequests().requestMatchers("/auth/**").permitAll()
+				.requestMatchers("/api/user/**").permitAll().requestMatchers("/api/owner/**").permitAll()
+				.requestMatchers("/pay/**").permitAll().requestMatchers("/**", "/swagger*/**", "/v*/api-docs/**")
+				.permitAll() // enabling
 				.requestMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

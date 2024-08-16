@@ -106,9 +106,9 @@ public class OwnerController {
 
 // get all users
 	@GetMapping("/allusers")
-	public ResponseEntity<List<Users>> getAllUsers() {
-		List<Users> sortedUsers = usercontroller.getAllUsers();
-		return new ResponseEntity<List<Users>>(sortedUsers, HttpStatus.OK);
+	public ResponseEntity<List<Object[]>> getAllUsers() {
+		List<Object[]> sortedUsers = usercontroller.getAllUsers();
+		return new ResponseEntity<List<Object[]>>(sortedUsers, HttpStatus.OK);
 	}
 
 // get cmnts of emp
@@ -124,5 +124,11 @@ public class OwnerController {
 		UpdateEmpDTO dto = empcontroller.findById(id);
 		return new ResponseEntity<UpdateEmpDTO>(dto, HttpStatus.OK);
 	}
+	//Delete User (done)
+		@DeleteMapping("/deleteuser/{id}")
+		public ResponseEntity<Users> deleteUser(@PathVariable Long id) {
+			usercontroller.deleteUser(id);
+			return new ResponseEntity<Users>(HttpStatus.OK);
+		}
 
 }

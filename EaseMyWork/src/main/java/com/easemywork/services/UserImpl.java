@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.easemywork.exceptions.ResourceNotFoundException;
+import com.easemywork.pojos.Employees;
 import com.easemywork.pojos.Location;
 import com.easemywork.pojos.Role;
 import com.easemywork.pojos.Users;
@@ -74,6 +75,12 @@ public class UserImpl implements IUserService, UserDetailsService {
 		Users user = userservice.findByEmail(email);
 		return new CustomUserDetails(user);
 	}
+	@Override
+	public void deleteUser(Long id) {
+		Users e = userservice.findById(id).orElseThrow(() -> new ResourceNotFoundException("invalid"));
+		userservice.delete(e);
+		return;
+	}
 
 	@Override
 	public List<Object[]> getByStatus(String status) {
@@ -82,8 +89,8 @@ public class UserImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	public List<Users> getAllUsers() {
-		List<Users> allUsers = userservice.findAll();
+	public List<Object[]> getAllUsers() {
+		List<Object[]> allUsers = userservice.getUsers();
 		return allUsers;
 	}
 

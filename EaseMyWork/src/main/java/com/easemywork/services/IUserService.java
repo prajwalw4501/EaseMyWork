@@ -10,18 +10,22 @@ import com.easmywork.dto.UsersDTO;
 
 public interface IUserService {
 	Users addUser(InsertUserDTO user) throws IOException;
-	
-	UpdateUserDTO updateUser(Long id,UpdateUserDTO dto);
+
+	UpdateUserDTO updateUser(Long id, UpdateUserDTO dto);
 
 	List<Object[]> getByStatus(String status);
 
-	List<Users> getAllUsers();
-Users findByEmail(String mail);
+	List<Object[]> getAllUsers();
 
-	Users login(String mail,String pass);
+	Users findByEmail(String mail);
+
+	Users login(String mail, String pass);
 
 	UsersDTO findById(Long id);
+
 	List<Users> findRoleByMail(String mail);
+
+	void deleteUser(Long id);
 }
 
 //	List<Object[]> getUserById(Long id);

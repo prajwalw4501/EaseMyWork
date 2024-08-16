@@ -29,9 +29,6 @@ public class UsersDTO {
 		this.city=city;
 		this.pincode=pincode;
 		this.state=state;
-	
-	}
-	
-	
-
+		}
+		
 }
