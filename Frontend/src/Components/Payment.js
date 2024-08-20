@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import axios from 'axios';
 import { ToastContainer,toast } from 'react-toastify';
 import "react-toastify/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
+import { Context } from '../App';
 
 
 
@@ -57,6 +59,13 @@ const Payment = () => {
           toast.error('Payment initialization failed. Please try again.');
         }
       };
+      const { isAuthenticated } = useContext(Context);
+      const navigate = useNavigate();
+      useEffect(()=>{
+        if (!isAuthenticated) {
+          navigate("/login"); 
+          }
+      },[])
     
       return (
         

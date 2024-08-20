@@ -1,10 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../App";
 
 const HomePage = () => {
   // Set this to true if you want to use a video background instead of animation
   const useVideoBackground = false;
-
+  const { isAuthenticated } = useContext(Context);
+  const navigate = useNavigate();
+ 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {useVideoBackground ? (

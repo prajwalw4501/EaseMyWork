@@ -15,7 +15,7 @@ const About = () => {
             <img
               src={cartlogo}
               alt="Home services illustration"
-              className="w-full max-w-lg mx-auto lg:max-w-none lg:w-[110%] lg:-translate-x-[5%] rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105"
+              className="w-full max-w-lg mx-auto lg:max-w-none lg:w-[50%] lg:-translate-x-[5%] rounded-lg shadow-2xl transition-transform duration-300 hover:scale-125"
             />
           </div>
           <div className="order-1 lg:order-2 space-y-8">

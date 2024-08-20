@@ -1,17 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { Context } from "../../App";
 import { FaCalendarAlt, FaMoneyBillWave, FaClock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeBooking = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1000);
   const [service, setService] = useState("");
   const [isBooking, setIsBooking] = useState(false);
   const { selectedemployee, user } = useContext(Context);
   const [serviceSelected, setServiceSelected] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedemployee.length === 0) return;
@@ -29,10 +31,18 @@ const EmployeeBooking = () => {
   }, []);
 
   const handleStartDateChange = (e) => {
-    const start = new Date(e.target.value);
+    const selectedStartDate = new Date(e.target.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedStartDate < today) {
+      toast.error("Start date must be today or a future date.");
+      return;
+    }
+
     setStartDate(e.target.value);
-    start.setMonth(start.getMonth() + 1);
-    setEndDate(start.toISOString().split("T")[0]);
+    selectedStartDate.setMonth(selectedStartDate.getMonth() + 1);
+    setEndDate(selectedStartDate.toISOString().split("T")[0]);
   };
 
   const handleEndDateChange = (e) => {
@@ -51,12 +61,13 @@ const EmployeeBooking = () => {
     try {
       setIsBooking(true);
       const orderResponse = await axios.post(
-        "http://localhost:8080/api/user/createorder",
+        "http://localhost:8080/pay/createorder",
         {
           enddate: endDate,
           startDate,
           userid: user.uid,
-          emp_id: selectedemployee[0],
+          empid: selectedemployee[0],
+          amount: selectedemployee[7],
         }
       );
 
@@ -70,12 +81,15 @@ const EmployeeBooking = () => {
         order_id: order_id,
         handler: async function (response) {
           const paymentData = {
+            userid: user.uid,
+            amount: amount,
             order_id: order_id,
             payment_id: response.razorpay_payment_id,
             signature: response.razorpay_signature,
           };
-          // Implement payment verification here
+          await updatePaymentOnServer(paymentData);
           toast.success("Payment successful! Booking confirmed.");
+          navigate("/home");
         },
         prefill: {
           name: user.firstname + " " + user.lastname,
@@ -96,17 +110,30 @@ const EmployeeBooking = () => {
     }
   };
 
+  const updatePaymentOnServer = async (paymentData) => {
+    try {
+      await axios.post("http://localhost:8080/pay/updatepay", paymentData);
+      toast.success("Payment details saved successfully.");
+    } catch (err) {
+      console.error("Failed to update payment on server:", err);
+      toast.error("Failed to save payment details. Please contact support.");
+    }
+  };
+  const { isAuthenticated } = useContext(Context);
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      navigate("/login"); 
+      }
+  })
+
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
-      <h2 className="text-2xl font-semibold mb-6 text-center">
-        Book Service for Employee
-      </h2>
+      <ToastContainer position="top-center" />
+      <h2 className="text-2xl font-semibold mb-6 text-center">Book Service for Employee</h2>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
-            Service
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">Service</label>
           <div className="flex items-center border border-gray-300 rounded-md bg-gray-100 p-2">
             <FaClock className="text-gray-500 mr-2" />
             <input
@@ -132,9 +159,7 @@ const EmployeeBooking = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
-            Start Date
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">Start Date</label>
           <div className="relative">
             <FaCalendarAlt className="absolute top-3 left-3 text-gray-500" />
             <input
@@ -148,9 +173,7 @@ const EmployeeBooking = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
-            End Date
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">End Date</label>
           <div className="relative">
             <FaCalendarAlt className="absolute top-3 left-3 text-gray-500" />
             <input

@@ -17,6 +17,9 @@ import Register from "./Components/Register.js";
 import DisplayEmployee from "./Components/DisplayEmployee.js";
 import EditEmployee from "./Components/EditEmployee.js";
 import EmployeeBooking from "./Components/Testimonial/EmployeBooking.js";
+import Rating from "./Components/Rating.js";
+import DisplayUsers from "./Components/DisplayUsers.js";
+import EditUser from "./Components/EditUser.js";
 
 
 export const Context = createContext({ isAuthenticated: false });
@@ -30,28 +33,25 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({});
   const[selectedemployee,setSelectedemployee]=useState([]);
+ const [isLoading,setIsLoading]=useState(false);
 
+ 
   useEffect(()=>{
-
-const authenticate = localStorage.getItem("isAuthenticated")
+const authenticate = sessionStorage.getItem("isAuthenticated");
+const peruser=JSON.parse(sessionStorage.getItem("user"));
 console.log(authenticate,"asdaf...........................................");
-if(authenticate=="true")
+if(authenticate=="true" && Object.keys(peruser).length!=0)
   {
-  // setIsAuthenticated(true);
-  // console.log("printttttttttttttttttt");
-  // setUser(()=>({
-  //   email:"sjdnj@gmail.com",
-  //   role,
-  //   firstname,
-  //   lastname,
-  //   uid
-
-  // }))
+  setIsAuthenticated(true);
+  setUser(()=>({
+    ...peruser
+}))
 }
+setIsLoading(true);
   },[])
 
 
-  return (
+  return isLoading==true && (
     <Context.Provider
       value={{
         isAuthenticated,
@@ -65,9 +65,10 @@ if(authenticate=="true")
       <ScrollRestoration />
 
       {!isHomePage && !isAuthPage && <Header />}
+
       <Outlet />
       {!isHomePage && !isAuthPage && <Footer />}
-      {/* {!isHomePage && !isAuthPage && <Sidebar />} */}
+
     </Context.Provider>
   );
 }
@@ -90,6 +91,10 @@ export const appRouter = createBrowserRouter([
         element: <SignUp />,
       },
       {
+        path:"/comment/:empid",
+        element:<Rating/>,
+      },
+      {
         path: "/home",
         element: <Home />,
       },
@@ -106,6 +111,10 @@ export const appRouter = createBrowserRouter([
         element:<Register/>,
       },
       {
+        path:"/users",
+        element:<DisplayUsers/>,
+      },
+      {
         path: "/booking",
         element: <Booking />,
       },
@@ -116,6 +125,10 @@ export const appRouter = createBrowserRouter([
       {
         path:"/editemp/:empid",
         element:<EditEmployee/>,
+      },
+      {
+        path:"/edituser/:user",
+        element:<EditUser/>,
       },
       {
         path: "/services",
