@@ -8,7 +8,9 @@ interface, EaseMyWork enables users to easily find and hire trustworthy service
 providers based on their specific needs and location.
 EaseMyWork not only simplifies household management but also contributes positively to the community by empowering individuals with meaningful employment opportunities. It serves as a practical solution for modern households and a supportive platform for those seeking work, fostering economic stability and social well-being.
 <h1>Snapshots</h1>
-![Screenshot 2024-08-17 024843](https://github.com/user-attachments/assets/fa3ec101-ba63-45c3-8039-f043d5d6518c)
+
+![Screenshot 2024-08-17 024843](https://github.com/user-attachments/assets/0ab2d8c7-76e5-451e-bcc1-2cffdee1987b)
+
 
 ![Screenshot 2024-08-17 025033](https://github.com/user-attachments/assets/96dbc96b-d3ec-4686-8582-107dd538a289)
 
