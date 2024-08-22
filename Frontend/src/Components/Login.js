@@ -28,8 +28,7 @@ const Login = () => {
       const result = await axios.post("http://localhost:8080/auth/login", {
         email,
         password,
-      })
-      //.then(res =>{sessionStorage.setItem('user',JSON.stringify(res.data))});
+      });
 
       console.log(result);
       setIsAuthenticated(true);
